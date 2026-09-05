@@ -1,1 +1,68 @@
-<!DOCTYPE html> <html lang="es"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Redes — Paladar Loco</title> <script src="https://cdn.tailwindcss.com"></script> <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet"> <script>tailwind.config={theme:{extend:{colors:{primario:'#E63946',claro:'#FFF9F0',oscuro:'#1E1E24'}}}}}</script> <style type="text/tailwindcss">@layer utilities { .sombra-hover { transition:all .3s ease; } .sombra-hover:hover { transform:translateY(-4px); box-shadow:0 10px 25px rgba(0,0,0,.12); } }</style> </head> <body class="bg-claro"> <nav class="fixed top-0 left-0 w-full bg-white/95 shadow-md z-50"> <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center"> <a href="inicio.html" class="text-2xl font-bold text-primario">🌭 Paladar Loco</a> <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50"><i class="fa fa-bars"></i></button> </div> <div id="menuDesplegable" class="hidden bg-white border-t shadow-lg"> <div class="max-w-7xl mx-auto px-4 py-3 grid md:grid-cols-2 gap-2"> <a href="inicio.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-home text-primario"></i> Inicio</a> <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-cutlery text-primario"></i> Menú</a> <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a> <a href="redes.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario"><i class="fa fa-share-alt"></i> Redes Sociales</a> <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a> <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horarios</a> <a href="entretenimiento.html" class="py-2 px-3 rounded-lg hover:bg-red-50 md:col-span-2"><i class="fa fa-gamepad text-primario"></i> Entretenimiento 🎮</a> </div> </div> </nav> <main class="pt-28 pb-20 px-4 max-w-4xl mx-auto text-center"> <h1 class="text-3xl font-bold mb-4 text-primario">📱 Síguenos en nuestras Redes</h1> <p class="text-lg text-gray-600 mb-10">¡Entérate de novedades y contáctanos cuando quieras! 💬</p> <div class="grid md:grid-cols-3 gap-6"> <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover"> <span class="text-4xl text-blue-600"><i class="fa fa-facebook-square"></i></span> <h3 class="font-bold mt-3">Facebook</h3> <p class="text-sm text-gray-500">@PaladarLocoCR</p> </a> <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover"> <span class="text-4xl text-pink-500"><i class="fa fa-instagram"></i></span> <h3 class="font-bold mt-3">Instagram</h3> <p class="text-sm text-gray-500">@paladalo.cr</p> </a> <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover"> <span class="text-4xl text-green-500"><i class="fa fa-whatsapp"></i></span> <h3 class="font-bold mt-3">WhatsApp</h3> <p class="text-sm text-gray-500">+506 8888-8888</p> </a> </div> </main> <footer class="bg-oscuro text-white py-6 text-center"><p class="text-sm">© 2026 Paladar Loco — Síguenos en redes</p></footer> <script> const b=document.getElementById('btnMenu'),m=document.getElementById('menuDesplegable'); b.onclick=()=>m.classList.toggle('hidden'); document.querySelectorAll('#menuDesplegable a').forEach(l=>{l.onclick=()=>{m.classList.add('hidden');window.scrollTo(0,0);}}); document.addEventListener('click',e=>{if(!b.contains(e.target)&&!m.contains(e.target))m.classList.add('hidden');}); window.scrollTo(0,0); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redes — Paladar Loco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{primario:'#E63946',claro:'#FFF9F0',oscuro:'#1E1E24'},fontFamily:{titulo:['Dancing Script','cursive'],cuerpo:['Inter','sans-serif']}}}}</script>
+    <style type="text/tailwindcss">@layer utilities { .sombra-hover { transition:all .3s ease; } .sombra-hover:hover { transform:translateY(-4px); box-shadow:0 10px 25px rgba(0,0,0,.12); } }</style>
+</head>
+<body class="bg-claro">
+<nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+        <a href="index.html" class="flex items-center gap-3">
+            <img src="logo-paladar-loco.png" alt="Logo" class="h-12 w-auto rounded-lg" />
+            <span class="text-3xl font-titulo font-bold text-primario">Paladar Loco</span>
+        </a>
+        <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg"><i class="fa fa-bars"></i></button>
+    </div>
+    <div id="menuDesplegable" class="hidden bg-white border-t shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 grid md:grid-cols-2 gap-2">
+            <a href="index.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-home text-primario"></i> Inicio</a>
+            <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-cutlery text-primario"></i> Menú</a>
+            <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a>
+            <a href="redes.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario"><i class="fa fa-share-alt"></i> Redes Sociales</a>
+            <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a>
+            <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horarios</a>
+            <a href="entretenimiento.html" class="py-2 px-3 rounded-lg hover:bg-red-50 md:col-span-2"><i class="fa fa-gamepad text-primario"></i> Entretenimiento 🎮</a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-28 pb-20 px-4 max-w-4xl mx-auto text-center">
+    <h1 class="text-4xl font-titulo font-bold mb-4 text-primario">📱 Síguenos en nuestras Redes</h1>
+    <p class="text-lg text-gray-600 mb-10">¡Entérate de novedades y contáctanos cuando quieras! 💬</p>
+    <div class="grid md:grid-cols-3 gap-6">
+        <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover">
+            <span class="text-4xl text-blue-600"><i class="fa fa-facebook-square"></i></span>
+            <h3 class="font-bold mt-3">Facebook</h3>
+            <p class="text-sm text-gray-500">@PaladarLocoCR</p>
+        </a>
+        <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover">
+            <span class="text-4xl text-pink-500"><i class="fa fa-instagram"></i></span>
+            <h3 class="font-bold mt-3">Instagram</h3>
+            <p class="text-sm text-gray-500">@paladalo.cr</p>
+        </a>
+        <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover">
+            <span class="text-4xl text-green-500"><i class="fa fa-whatsapp"></i></span>
+            <h3 class="font-bold mt-3">WhatsApp</h3>
+            <p class="text-sm text-gray-500">+506 8888-8888</p>
+        </a>
+    </div>
+</main>
+
+<footer class="bg-oscuro text-white py-6 text-center">
+    <p class="text-lg font-titulo text-xl">Paladar Loco — Proyecto Técnicas 2026</p>
+</footer>
+<script>
+const b=document.getElementById('btnMenu'),m=document.getElementById('menuDesplegable');
+b.onclick=()=>m.classList.toggle('hidden');
+document.querySelectorAll('#menuDesplegable a').forEach(l=>{l.onclick=()=>{m.classList.add('hidden');window.scrollTo(0,0);}});
+document.addEventListener('click',e=>{if(!b.contains(e.target)&&!m.contains(e.target))m.classList.add('hidden');});
+window.scrollTo(0,0);
+</script>
+</body>
+</html>
