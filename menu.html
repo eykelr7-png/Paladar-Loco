@@ -6,12 +6,13 @@
     <title>Menú — Paladar Loco</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: { primario: '#E63946', secundario: '#FF9F1C', claro: '#FFF9F0', oscuro: '#1E1E24' },
-                    fontFamily: { titulo: ['Poppins', 'sans-serif'], cuerpo: ['Inter', 'sans-serif'] }
+                    fontFamily: { titulo: ['Dancing Script', 'cursive'], cuerpo: ['Inter', 'sans-serif'] }
                 }
             }
         }
@@ -19,68 +20,237 @@
     <style type="text/tailwindcss">
         @layer utilities {
             .sombra-hover { transition: all 0.3s ease; }
-            .sombra-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+            .sombra-hover:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
         }
 
+        /* ===== EFECTO BRILLANTE EN PRECIOS ===== */
+        .precio-brillante {
+            font-size: 26px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: brillo 3s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes brillo {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* ===== MENÚ ===== */
         .menu {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
             text-align: center;
         }
 
-        .logo-menu img {
-            width: 280px;
-            height: auto;
+        .logo-menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
+        }
+
+        .logo-menu img {
+            width: 300px;
+            height: auto;
             border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
         .menu h2 {
-            font-size: 32px;
+            font-size: 42px;
             font-weight: bold;
             color: #E63946;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            font-family: 'Dancing Script', cursive;
         }
 
-        .menu-item {
+        .contenedor-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .producto {
             background-color: white;
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 16px;
-            border-left: 5px solid #FF9F1C;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-top: 5px solid #FF9F1C;
             text-align: left;
         }
 
-        .menu-item h3 {
-            font-size: 20px;
+        .producto-imagen {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .producto-contenido {
+            padding: 20px;
+        }
+
+        .producto h3 {
+            font-size: 22px;
             font-weight: bold;
             color: #1E1E24;
             margin-bottom: 8px;
         }
 
-        .menu-item p {
+        .producto p {
             color: #555;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .producto-pie {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #E63946, #FF9F1C);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-info:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        /* ===== SECCIÓN DE DETALLES ===== */
+        .detalles-producto {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .detalles-producto.activo {
+            display: flex;
+            animation: aparecer 0.3s ease;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .detalles-contenido {
+            background-color: white;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: subir 0.4s ease;
+        }
+
+        @keyframes subir {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .detalles-cerrar {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #E63946;
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detalles-imagen {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .detalles-cuerpo {
+            padding: 25px;
+        }
+
+        .detalles-cuerpo h3 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1E1E24;
             margin-bottom: 10px;
         }
 
-        .precio {
-            font-size: 22px;
-            font-weight: bold;
+        .detalles-cuerpo h4 {
+            font-size: 18px;
             color: #E63946;
+            margin: 15px 0 8px;
+            font-weight: bold;
         }
 
+        .detalles-cuerpo ul {
+            padding-left: 20px;
+            color: #444;
+        }
+
+        .detalles-cuerpo li {
+            margin-bottom: 5px;
+        }
+
+        .detalles-pie {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #FF9F1C;
+        }
+
+        /* ===== EXTRAS ===== */
         .extras {
             background-color: #fff9f0;
             border: 2px dashed #FF9F1C;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 40px;
+            text-align: left;
         }
 
         .extras h4 {
             color: #E63946;
-            margin: 12px 0 6px;
+            margin: 15px 0 8px;
             font-weight: bold;
+            font-size: 18px;
         }
 
         .extras ul {
@@ -89,7 +259,7 @@
         }
 
         .extras li {
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -97,7 +267,10 @@
 
 <nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
-        <a href="index.html" class="text-2xl font-titulo font-bold text-primario">🌭 Paladar Loco</a>
+        <a href="index.html" class="flex items-center gap-3">
+            <img src="logo-paladar-loco.png" alt="Logo" class="h-12 w-auto rounded-lg" />
+            <span class="text-3xl font-titulo font-bold text-primario">Paladar Loco</span>
+        </a>
         <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg">
             <i class="fa fa-bars"></i>
         </button>
@@ -123,50 +296,97 @@
 
         <h2>PALADAR LOCO</h2>
 
-        <div class="menu-item">
-            <h3>🌭 El Clasicazo</h3>
-            <p>Pan, salchicha, repollo, papas trituradas, salsas y fresco.</p>
-            <span class="precio">₡1.200</span>
+        <div class="contenedor-productos">
+
+            <!-- EL CLASICAZO -->
+            <div class="producto sombra-hover">
+                <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=500&h=300&fit=crop" alt="El Clasicazo" class="producto-imagen">
+                <div class="producto-contenido">
+                    <h3>🌭 El Clasicazo</h3>
+                    <p>El favorito de todos, sencillo y delicioso.</p>
+                    <div class="producto-pie">
+                        <span class="precio-brillante">₡1.200</span>
+                        <button class="btn-info" onclick="verDetalles('clasicazo')">Más información</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TODO TERRENO -->
+            <div class="producto sombra-hover">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&h=300&fit=crop" alt="Todo Terreno" class="producto-imagen">
+                <div class="producto-contenido">
+                    <h3>🌭 Todo Terreno</h3>
+                    <p>Combinación explosiva de sabores increíbles.</p>
+                    <div class="producto-pie">
+                        <span class="precio-brillante">₡1.800</span>
+                        <button class="btn-info" onclick="verDetalles('terreno')">Más información</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EL LOCO BBQ -->
+            <div class="producto sombra-hover">
+                <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=500&h=300&fit=crop" alt="El Loco BBQ" class="producto-imagen">
+                <div class="producto-contenido">
+                    <h3>🔥 El Loco BBQ</h3>
+                    <p>El sabor ahumado que te encantará.</p>
+                    <div class="producto-pie">
+                        <span class="precio-brillante">₡2.000</span>
+                        <button class="btn-info" onclick="verDetalles('bbq')">Más información</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EL CRUNCHI BACON -->
+            <div class="producto sombra-hover">
+                <img src="https://images.unsplash.com/photo-1544510808-91bcbee1df55?w=500&h=300&fit=crop" alt="El Crunchi Bacon" class="producto-imagen">
+                <div class="producto-contenido">
+                    <h3>🥓 El Crunchi Bacon</h3>
+                    <p>Nuestra opción premium, ¡irresistible!</p>
+                    <div class="producto-pie">
+                        <span class="precio-brillante">₡2.200</span>
+                        <button class="btn-info" onclick="verDetalles('bacon')">Más información</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TROPIDOG -->
+            <div class="producto sombra-hover">
+                <img src="https://images.unsplash.com/photo-1551024601-becb338a3e71?w=500&h=300&fit=crop" alt="TropiDog" class="producto-imagen">
+                <div class="producto-contenido">
+                    <h3>🍍 TropiDog</h3>
+                    <p>Un toque tropical que te sorprenderá.</p>
+                    <div class="producto-pie">
+                        <span class="precio-brillante">₡1.700</span>
+                        <button class="btn-info" onclick="verDetalles('tropi')">Más información</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DULCE TENTACIÓN -->
+            <div class="producto sombra-hover">
+                <img src="https://images.unsplash.com/photo-1633436375852-ec509999da87?w=500&h=300&fit=crop" alt="Dulce Tentación" class="producto-imagen">
+                <div class="producto-contenido">
+                    <h3>🍩 Dulce Tentación</h3>
+                    <p>El postre perfecto para cerrar con broche de oro.</p>
+                    <div class="producto-pie">
+                        <span class="precio-brillante">₡2.000</span>
+                        <button class="btn-info" onclick="verDetalles('dulce')">Más información</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <div class="menu-item">
-            <h3>🌭 Todo Terreno</h3>
-            <p>Pan, salchicha, guacamole, salsa, cebolla caramelizada, chimichurri y fresco.</p>
-            <span class="precio">₡1.800</span>
-        </div>
-
-        <div class="menu-item">
-            <h3>🔥 El Loco BBQ</h3>
-            <p>Pan, salchicha, cebolla caramelizada y salsa BBQ.</p>
-            <span class="precio">₡2.000</span>
-        </div>
-
-        <div class="menu-item">
-            <h3>🥓 El Crunchi Bacon</h3>
-            <p>Pan, salchicha, tocineta en trozos, cebolla crispy y salsa especial.</p>
-            <span class="precio">₡2.200</span>
-        </div>
-
-        <div class="menu-item">
-            <h3>🍍 TropiDog</h3>
-            <p>Pan, salchicha, cebolla caramelizada, piña y queso mozzarella.</p>
-            <span class="precio">₡1.700</span>
-        </div>
-
-        <div class="menu-item">
-            <h3>🍩 Dulce Tentación</h3>
-            <p>2 churros con toppings y jarabe a elegir.</p>
-            <span class="precio">₡2.000</span>
-        </div>
-
-        <div class="menu-item extras">
-            <h4>✨ Toppings a elegir (máximo 2)</h4>
+        <!-- EXTRAS -->
+        <div class="extras">
+            <h4>✨ Toppings a elegir (máximo 2) — Solo para Dulce Tentación</h4>
             <ul>
                 <li>🍪 Galleta triturada: Oreo o Chips</li>
                 <li>🥜 Maní y chispas de colores</li>
             </ul>
 
-            <h4>🍯 Jarabe a elegir (1 opción)</h4>
+            <h4>🍯 Jarabe a elegir (1 opción) — Solo para Dulce Tentación</h4>
             <ul>
                 <li>🥛 Leche condensada</li>
                 <li>🍫 Chocolate</li>
@@ -176,11 +396,125 @@
     </section>
 </main>
 
+<!-- ===== VENTANA DE DETALLES ===== -->
+<div id="detalles" class="detalles-producto" onclick="cerrarDetallesExterno(event)">
+    <div class="detalles-contenido" onclick="event.stopPropagation()">
+        <button class="detalles-cerrar" onclick="cerrarDetalles()">✕</button>
+        <img id="detalle-imagen" src="" alt="" class="detalles-imagen">
+        <div class="detalles-cuerpo">
+            <h3 id="detalle-nombre"></h3>
+            <p id="detalle-descripcion" class="text-gray-600 mb-3"></p>
+            
+            <h4>📋 Ingredientes:</h4>
+            <ul id="detalle-ingredientes"></ul>
+            
+            <h4>💡 Dato curioso:</h4>
+            <p id="detalle-curiosidad" class="text-gray-600"></p>
+            
+            <div class="detalles-pie">
+                <span>Precio:</span>
+                <span id="detalle-precio" class="precio-brillante"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <footer class="bg-oscuro text-white py-6 text-center">
-    <p class="text-sm">© 2026 Paladar Loco — Todos los precios en ₡ Colones</p>
+    <p class="text-lg font-titulo text-xl">Paladar Loco — Proyecto Técnicas 2026</p>
 </footer>
 
 <script>
+// ===== DATOS DE LOS PRODUCTOS =====
+const productos = {
+    clasicazo: {
+        nombre: "🌭 El Clasicazo",
+        imagen: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=700&h=400&fit=crop",
+        descripcion: "El perro caliente tradicional que nunca falla. Sencillo, delicioso y el favorito de todos.",
+        ingredientes: ["Pan fresco", "Salchicha jugosa", "Repollo", "Papas trituradas", "Salsas clásicas", "Fresco"],
+        curiosidad: "¡Es nuestro producto más vendido! Perfecto para quienes aman lo tradicional.",
+        precio: "₡1.200"
+    },
+    terreno: {
+        nombre: "🌭 Todo Terreno",
+        imagen: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=700&h=400&fit=crop",
+        descripcion: "Una combinación explosiva de sabores que te llevará a otro nivel. ¡Para los más aventureros!",
+        ingredientes: ["Pan fresco", "Salchicha", "Guacamole especial", "Salsa", "Cebolla caramelizada", "Chimichurri", "Fresco"],
+        curiosidad: "Su nombre se debe a que 'aguanta' cualquier momento del día: desayuno, almuerzo o merienda.",
+        precio: "₡1.800"
+    },
+    bbq: {
+        nombre: "🔥 El Loco BBQ",
+        imagen: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=700&h=400&fit=crop",
+        descripcion: "El sabor ahumado de la salsa BBQ combinado con cebolla dulce caramelizada. ¡Una locura!",
+        ingredientes: ["Pan fresco", "Salchicha", "Cebolla caramelizada", "Salsa BBQ especial"],
+        curiosidad: "La salsa BBQ la preparamos con una receta secreta que le da ese toque único.",
+        precio: "₡2.000"
+    },
+    bacon: {
+        nombre: "🥓 El Crunchi Bacon",
+        imagen: "https://images.unsplash.com/photo-1544510808-91bcbee1df55?w=700&h=400&fit=crop",
+        descripcion: "Nuestra opción premium. Tocineta crujiente en trozos con cebolla crispy y salsa especial.",
+        ingredientes: ["Pan fresco", "Salchicha", "Tocineta en trozos", "Cebolla crispy", "Salsa especial de la casa"],
+        curiosidad: "¡El favorito de los amantes del tocino! Su textura crujiente es lo que lo hace especial.",
+        precio: "₡2.200"
+    },
+    tropi: {
+        nombre: "🍍 TropiDog",
+        imagen: "https://images.unsplash.com/photo-1551024601-becb338a3e71?w=700&h=400&fit=crop",
+        descripcion: "Un toque tropical con piña dulce y queso mozzarella derretido. ¡Sabor caribeño!",
+        ingredientes: ["Pan fresco", "Salchicha", "Cebolla caramelizada", "Piña dulce", "Queso mozzarella"],
+        curiosidad: "La combinación dulce-salada de la piña con el queso lo hace único en su tipo.",
+        precio: "₡1.700"
+    },
+    dulce: {
+        nombre: "🍩 Dulce Tentación",
+        imagen: "https://images.unsplash.com/photo-1633436375852-ec509999da87?w=700&h=400&fit=crop",
+        descripcion: "Dos churros deliciosos con toppings y jarabe a elegir. El postre perfecto.",
+        ingredientes: ["2 churros recién hechos", "2 toppings a elegir", "1 jarabe a elegir"],
+        curiosidad: "¡Ideal para compartir... o no! Muchos prefieren disfrutarlo solitos porque es tan rico.",
+        precio: "₡2.000"
+    }
+};
+
+// ===== FUNCIONES PARA DETALLES =====
+function verDetalles(id) {
+    const p = productos[id];
+    document.getElementById('detalle-imagen').src = p.imagen;
+    document.getElementById('detalle-imagen').alt = p.nombre;
+    document.getElementById('detalle-nombre').textContent = p.nombre;
+    document.getElementById('detalle-descripcion').textContent = p.descripcion;
+    document.getElementById('detalle-curiosidad').textContent = p.curiosidad;
+    document.getElementById('detalle-precio').textContent = p.precio;
+    
+    const ul = document.getElementById('detalle-ingredientes');
+    ul.innerHTML = '';
+    p.ingredientes.forEach(ing => {
+        const li = document.createElement('li');
+        li.textContent = ing;
+        ul.appendChild(li);
+    });
+    
+    document.getElementById('detalles').classList.add('activo');
+    document.body.style.overflow = 'hidden';
+}
+
+function cerrarDetalles() {
+    document.getElementById('detalles').classList.remove('activo');
+    document.body.style.overflow = 'auto';
+}
+
+function cerrarDetallesExterno(event) {
+    if (event.target.id === 'detalles') {
+        cerrarDetalles();
+    }
+}
+
+// Cerrar con tecla ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarDetalles();
+});
+
+// ===== MENÚ =====
 const btnMenu = document.getElementById('btnMenu');
 const menuDesplegable = document.getElementById('menuDesplegable');
 btnMenu.addEventListener('click', () => menuDesplegable.classList.toggle('hidden'));
