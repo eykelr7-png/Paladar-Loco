@@ -3,66 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redes — Paladar Loco</title>
+    <title>Redes Sociales — Paladar Loco</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>tailwind.config={theme:{extend:{colors:{primario:'#E63946',claro:'#FFF9F0',oscuro:'#1E1E24'},fontFamily:{titulo:['Dancing Script','cursive'],cuerpo:['Inter','sans-serif']}}}}</script>
-    <style type="text/tailwindcss">@layer utilities { .sombra-hover { transition:all .3s ease; } .sombra-hover:hover { transform:translateY(-4px); box-shadow:0 10px 25px rgba(0,0,0,.12); } }</style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primario: '#E63946', secundario: '#FF9F1C', claro: '#FFF9F0', oscuro: '#1E1E24' },
+                    fontFamily: { titulo: ['Poppins', 'sans-serif'], cuerpo: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; padding: 0; overflow-x: hidden; background: #FFF9F0; }
+
+        .borde-animado {
+            position: relative; border-radius: 20px; padding: 5px; overflow: hidden;
+        }
+        .borde-animado::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(#E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            animation: borde-gira-lento 6s linear infinite; transform-origin: center;
+        }
+        @keyframes borde-gira-lento {
+            0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }
+        }
+        .borde-interior {
+            position: relative; z-index: 1; background: white; border-radius: 17px; height: 100%;
+        }
+
+        .titulo-animado {
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
+            color: transparent; font-weight: 900; font-family: 'Poppins', sans-serif;
+            animation: texto-colores 3s ease infinite;
+        }
+        @keyframes texto-colores {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .emoji-giro { display: inline-block; animation: giro-lento 4s ease-in-out infinite; }
+        @keyframes giro-lento { 0% { transform: rotateY(-20deg); } 50% { transform: rotateY(20deg); } 100% { transform: rotateY(-20deg); } }
+
+        .titulo-seccion { position: relative; display: inline-block; }
+        .titulo-seccion::after {
+            content: ''; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
+            width: 55%; height: 3px; background: linear-gradient(90deg, transparent, #E63946, #FF9F1C, #E63946, transparent);
+            border-radius: 2px;
+        }
+
+        .tarjeta-animada { transition: transform 0.25s ease; }
+        .tarjeta-animada:hover { transform: translateY(-5px); }
+
+        .red-social { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: #f9f9f9; transition: all 0.3s ease; text-decoration: none; color: inherit; }
+        .red-social:hover { background: linear-gradient(135deg, rgba(230,57,70,0.1), rgba(255,159,28,0.1)); transform: scale(1.02); }
+
+        #btnMenu { transition: transform 0.25s ease; }
+        #btnMenu:hover { transform: rotate(90deg) scale(1.08); background: linear-gradient(135deg, #E63946, #FF9F1C); color: white; }
+        #menuDesplegable { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        #menuDesplegable.mostrar { max-height: 500px; padding: 10px 0; }
+        #menuDesplegable a:hover { transform: translateX(6px); background: linear-gradient(90deg, rgba(230,57,70,0.08), transparent); }
+
+        .animar-salida { animation: salida 0.4s ease-in forwards; }
+        @keyframes salida { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-15px); } }
+    </style>
 </head>
-<body class="bg-claro">
+<body class="bg-claro text-oscuro font-cuerpo antialiased">
+
+<div id="contenido-pagina">
 <nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
-        <a href="index.html" class="flex items-center gap-3">
-            <img src="logo-paladar-loco.png" alt="Logo" class="h-12 w-auto rounded-lg" />
-            <span class="text-3xl font-titulo font-bold text-primario">Paladar Loco</span>
+        <a href="index.html" class="flex items-center gap-3" onclick="navegar(event, 'index.html')">
+            <img src="logo-paladar-loco.png" alt="Logo" class="h-10 md:h-12 w-auto rounded-lg" loading="eager">
+            <span class="text-xl md:text-2xl lg:text-3xl font-titulo font-extrabold text-primario tracking-wide">PALADAR LOCO</span>
         </a>
-        <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg"><i class="fa fa-bars"></i></button>
+        <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg">
+            <i class="fa fa-bars"></i>
+        </button>
     </div>
-    <div id="menuDesplegable" class="hidden bg-white border-t shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 grid md:grid-cols-2 gap-2">
-            <a href="index.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-home text-primario"></i> Inicio</a>
-            <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-cutlery text-primario"></i> Menú</a>
-            <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a>
-            <a href="redes.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario"><i class="fa fa-share-alt"></i> Redes Sociales</a>
-            <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a>
-            <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horarios</a>
-            <a href="entretenimiento.html" class="py-2 px-3 rounded-lg hover:bg-red-50 md:col-span-2"><i class="fa fa-gamepad text-primario"></i> Entretenimiento 🎮</a>
+    <div id="menuDesplegable" class="md:px-6">
+        <div class="max-w-7xl mx-auto px-4 md:px-0 py-3 grid md:grid-cols-2 gap-2">
+            <a href="index.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'index.html')"><i class="fa fa-home"></i> Inicio</a>
+            <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'menu.html')"><i class="fa fa-cutlery text-primario"></i> Menú</a>
+            <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'pagos.html')"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a>
+            <a href="redes.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario flex items-center gap-2"><i class="fa fa-share-alt"></i> Redes Sociales</a>
+            <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'nosotros.html')"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a>
+            <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'ubicacion.html')"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horario</a>
+            <a href="entretenimiento.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2 md:col-span-2" onclick="navegar(event, 'entretenimiento.html')"><i class="fa fa-gamepad text-primario"></i> Entretenimiento — Encuestas, juegos y más 🎮</a>
         </div>
     </div>
 </nav>
 
-<main class="pt-28 pb-20 px-4 max-w-4xl mx-auto text-center">
-    <h1 class="text-4xl font-titulo font-bold mb-4 text-primario">📱 Síguenos en nuestras Redes</h1>
-    <p class="text-lg text-gray-600 mb-10">¡Entérate de novedades y contáctanos cuando quieras! 💬</p>
-    <div class="grid md:grid-cols-3 gap-6">
-        <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover">
-            <span class="text-4xl text-blue-600"><i class="fa fa-facebook-square"></i></span>
-            <h3 class="font-bold mt-3">Facebook</h3>
-            <p class="text-sm text-gray-500">@PaladarLocoCR</p>
-        </a>
-        <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover">
-            <span class="text-4xl text-pink-500"><i class="fa fa-instagram"></i></span>
-            <h3 class="font-bold mt-3">Instagram</h3>
-            <p class="text-sm text-gray-500">@paladalo.cr</p>
-        </a>
-        <a href="#" class="bg-white rounded-2xl p-6 shadow-md sombra-hover">
-            <span class="text-4xl text-green-500"><i class="fa fa-whatsapp"></i></span>
-            <h3 class="font-bold mt-3">WhatsApp</h3>
-            <p class="text-sm text-gray-500">+506 8888-8888</p>
-        </a>
+<main class="pt-24 pb-16 px-4 md:px-6 max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-titulo titulo-animado titulo-seccion inline-block">
+            <span class="emoji-giro">📱</span> SÍGUENOS EN NUESTRAS REDES
+        </h1>
+        <p class="text-gray-600 mt-4 max-w-2xl mx-auto">¡Mantente al tanto de todo! Síguenos y no te pierdas ninguna novedad de Paladar Loco.</p>
+    </div>
+
+    <div class="borde-animado mb-10">
+        <div class="borde-interior p-6">
+            <h3 class="text-xl font-bold titulo-animado mb-6 text-center">🌐 Nuestras Redes</h3>
+            <div class="space-y-4">
+                <a href="#" class="red-social">
+                    <span class="text-3xl emoji-giro" style="animation-delay:0s;">📘</span>
+                    <div>
+                        <p class="font-bold titulo-animado text-lg">Facebook</p>
+                        <p class="text-sm text-gray-500">Paladar Loco — Síguenos aquí</p>
+                    </div>
+                </a>
+                <a href="#" class="red-social">
+                    <span class="text-3xl emoji-giro" style="animation-delay:0.4s;">📸</span>
+                    <div>
+                        <p class="font-bold titulo-animado text-lg">Instagram</p>
+                        <p class="text-sm text-gray-500">@paladarloco — Las mejores fotos de nuestros perros calientes</p>
+                    </div>
+                </a>
+                <a href="#" class="red-social">
+                    <span class="text-3xl emoji-giro" style="animation-delay:0.8s;">🐦</span>
+                    <div>
+                        <p class="font-bold titulo-animado text-lg">Twitter / X</p>
+                        <p class="text-sm text-gray-500">@paladarloco — ¡Novedades al instante!</p>
+                    </div>
+                </a>
+                <a href="#" class="red-social">
+                    <span class="text-3xl emoji-giro" style="animation-delay:1.2s;">💬</span>
+                    <div>
+                        <p class="font-bold titulo-animado text-lg">WhatsApp</p>
+                        <p class="text-sm text-gray-500">Escríbenos si tienes alguna duda</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Contenido -->
+    <div class="borde-animado">
+        <div class="borde-interior p-6">
+            <h2 class="text-2xl font-bold titulo-animado mb-6 text-center titulo-seccion inline-block">
+                <span class="emoji-giro">📝</span> CONTENIDO
+            </h2>
+            <p class="text-center text-gray-600 mb-6">Aquí publicaremos todo lo que compartamos en nuestras redes sociales. ¡Pronto tendremos mucho contenido nuevo! <span class="emoji-giro" style="animation-delay:0.6s;">✨</span></p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="borde-animado">
+                    <div class="borde-interior p-3 text-center">
+                        <span class="text-3xl emoji-giro">📸</span>
+                        <p class="text-sm font-semibold mt-2">Fotos</p>
+                    </div>
+                </div>
+                <div class="borde-animado">
+                    <div class="borde-interior p-3 text-center">
+                        <span class="text-3xl emoji-giro">🎥</span>
+                        <p class="text-sm font-semibold mt-2">Videos</p>
+                    </div>
+                </div>
+                <div class="borde-animado">
+                    <div class="borde-interior p-3 text-center">
+                        <span class="text-3xl emoji-giro">📢</span>
+                        <p class="text-sm font-semibold mt-2">Novedades</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 
 <footer class="bg-oscuro text-white py-6 text-center">
-    <p class="text-lg font-titulo text-xl">Paladar Loco — Proyecto Técnicas 2026</p>
+    <p class="text-base md:text-lg font-titulo font-bold tracking-wide">PALADAR LOCO — PROYECTO TÉCNICAS 2026</p>
 </footer>
+</div>
+
 <script>
-const b=document.getElementById('btnMenu'),m=document.getElementById('menuDesplegable');
-b.onclick=()=>m.classList.toggle('hidden');
-document.querySelectorAll('#menuDesplegable a').forEach(l=>{l.onclick=()=>{m.classList.add('hidden');window.scrollTo(0,0);}});
-document.addEventListener('click',e=>{if(!b.contains(e.target)&&!m.contains(e.target))m.classList.add('hidden');});
-window.scrollTo(0,0);
+const btnMenu = document.getElementById('btnMenu');
+const menuDesplegable = document.getElementById('menuDesplegable');
+btnMenu.addEventListener('click', () => menuDesplegable.classList.toggle('mostrar'));
+
+function navegar(event, url) {
+    event.preventDefault();
+    const contenido = document.getElementById('contenido-pagina');
+    contenido.classList.add('animar-salida');
+    setTimeout(() => window.location.href = url, 400);
+}
 </script>
 </body>
 </html>
