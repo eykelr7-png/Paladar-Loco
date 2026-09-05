@@ -6,74 +6,363 @@
     <title>Entretenimiento — Paladar Loco</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>tailwind.config={theme:{extend:{colors:{primario:'#E63946',secundario:'#FF9F1C',claro:'#FFF9F0',oscuro:'#1E1E24'},fontFamily:{titulo:['Dancing Script','cursive'],cuerpo:['Inter','sans-serif']}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primario: '#E63946', secundario: '#FF9F1C', claro: '#FFF9F0', oscuro: '#1E1E24' },
+                    fontFamily: { titulo: ['Poppins', 'sans-serif'], cuerpo: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; padding: 0; overflow-x: hidden; background: #FFF9F0; }
+
+        .borde-animado {
+            position: relative; border-radius: 20px; padding: 5px; overflow: hidden;
+        }
+        .borde-animado::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(#E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            animation: borde-gira-lento 6s linear infinite; transform-origin: center;
+        }
+        @keyframes borde-gira-lento {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .borde-interior {
+            position: relative; z-index: 1; background: white; border-radius: 17px; height: 100%;
+        }
+
+        .titulo-animado {
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
+            color: transparent; font-weight: 900; font-family: 'Poppins', sans-serif;
+            animation: texto-colores 3s ease infinite;
+        }
+        @keyframes texto-colores {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .emoji-giro { display: inline-block; animation: giro-lento 4s ease-in-out infinite; }
+        @keyframes giro-lento { 0% { transform: rotateY(-20deg); } 50% { transform: rotateY(20deg); } 100% { transform: rotateY(-20deg); } }
+
+        .titulo-seccion { position: relative; display: inline-block; }
+        .titulo-seccion::after {
+            content: ''; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
+            width: 55%; height: 3px; background: linear-gradient(90deg, transparent, #E63946, #FF9F1C, #E63946, transparent);
+            border-radius: 2px;
+        }
+
+        .tarjeta-animada { transition: transform 0.25s ease; }
+        .tarjeta-animada:hover { transform: translateY(-5px); }
+
+        .imagen-tarjeta {
+            width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 16px;
+        }
+
+        .boton-accion {
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 300% 100%; color: white; font-weight: bold; padding: 10px 24px;
+            border-radius: 30px; border: none; cursor: pointer; font-size: 16px;
+            animation: boton-colores 3s ease infinite; transition: transform 0.2s ease;
+        }
+        .boton-accion:hover { transform: scale(1.05); }
+        @keyframes boton-colores {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .encuesta-opcion, .pregunta-opcion {
+            border: 2px solid #eee; border-radius: 12px; padding: 12px 16px; margin: 8px 0;
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .encuesta-opcion:hover, .pregunta-opcion:hover { border-color: #FF9F1C; background: #fffbf0; }
+        .encuesta-opcion.seleccionada { border-color: #E63946; background: #fff0f0; }
+        .pregunta-opcion.correcta { border-color: #22c55e; background: #f0fdf4; }
+        .pregunta-opcion.incorrecta { border-color: #ef4444; background: #fef2f2; }
+
+        .barra { height: 24px; border-radius: 12px; background: linear-gradient(90deg, #E63946, #FF9F1C); transition: width 0.5s ease; }
+        .explicacion { background: #f0f9ff; border-left: 4px solid #0ea5e9; padding: 12px; border-radius: 0 10px 10px 0; margin-top: 10px; }
+
+        #btnMenu { transition: transform 0.25s ease; }
+        #btnMenu:hover { transform: rotate(90deg) scale(1.08); background: linear-gradient(135deg, #E63946, #FF9F1C); color: white; }
+        #menuDesplegable { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        #menuDesplegable.mostrar { max-height: 500px; padding: 10px 0; }
+        #menuDesplegable a:hover { transform: translateX(6px); background: linear-gradient(90deg, rgba(230,57,70,0.08), transparent); }
+
+        .animar-salida { animation: salida 0.4s ease-in forwards; }
+        @keyframes salida { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-15px); } }
+    </style>
 </head>
-<body class="bg-claro">
+<body class="bg-claro text-oscuro font-cuerpo antialiased">
+
+<div id="contenido-pagina">
 <nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
-        <a href="index.html" class="flex items-center gap-3">
-            <img src="logo-paladar-loco.png" alt="Logo" class="h-12 w-auto rounded-lg" />
-            <span class="text-3xl font-titulo font-bold text-primario">Paladar Loco</span>
+        <a href="index.html" class="flex items-center gap-3" onclick="navegar(event, 'index.html')">
+            <img src="logo-paladar-loco.png" alt="Logo" class="h-10 md:h-12 w-auto rounded-lg" loading="eager">
+            <span class="text-xl md:text-2xl lg:text-3xl font-titulo font-extrabold text-primario tracking-wide">PALADAR LOCO</span>
         </a>
-        <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg"><i class="fa fa-bars"></i></button>
+        <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg">
+            <i class="fa fa-bars"></i>
+        </button>
     </div>
-    <div id="menuDesplegable" class="hidden bg-white border-t shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 grid md:grid-cols-2 gap-2">
-            <a href="index.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-home text-primario"></i> Inicio</a>
-            <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-cutlery text-primario"></i> Menú</a>
-            <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a>
-            <a href="redes.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-share-alt text-primario"></i> Redes Sociales</a>
-            <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a>
-            <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horarios</a>
-            <a href="entretenimiento.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario md:col-span-2"><i class="fa fa-gamepad"></i> Entretenimiento 🎮</a>
+    <div id="menuDesplegable" class="md:px-6">
+        <div class="max-w-7xl mx-auto px-4 md:px-0 py-3 grid md:grid-cols-2 gap-2">
+            <a href="index.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'index.html')"><i class="fa fa-home"></i> Inicio</a>
+            <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'menu.html')"><i class="fa fa-cutlery text-primario"></i> Menú</a>
+            <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'pagos.html')"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a>
+            <a href="redes.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'redes.html')"><i class="fa fa-share-alt text-primario"></i> Redes Sociales</a>
+            <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'nosotros.html')"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a>
+            <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'ubicacion.html')"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horario</a>
+            <a href="entretenimiento.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario flex items-center gap-2 md:col-span-2"><i class="fa fa-gamepad"></i> Entretenimiento — Encuestas, juegos y más 🎮</a>
         </div>
     </div>
 </nav>
 
-<main class="pt-28 pb-20 px-4 max-w-7xl mx-auto">
-    <h1 class="text-4xl font-titulo font-bold text-center mb-4 text-primario">🎮 Entretenimiento</h1>
-    <p class="text-center text-lg text-gray-600 mb-10">¡Diviértete un poco mientras decides qué comer! 😄</p>
-    <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-white rounded-2xl p-6 shadow-md">
-            <h3 class="text-xl font-bold mb-4">📋 Encuesta Rápida</h3>
-            <p class="mb-3 font-medium">¿Cuál es tu perrito favorito?</p>
-            <div class="space-y-2">
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🌭 El Clasicazo</label>
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🌭 Todo Terreno</label>
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🔥 El Loco BBQ</label>
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🥓 El Crunchi Bacon</label>
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🍍 TropiDog</label>
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🍩 Dulce Tentación</label>
+<main class="pt-24 pb-16 px-4 md:px-6 max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-titulo titulo-animado titulo-seccion inline-block">
+            <span class="emoji-giro">🎮</span> ENTRETENIMIENTO
+        </h1>
+        <p class="text-gray-600 mt-4 max-w-2xl mx-auto">¡Diviértete un poco! Vota por tu favorito y pon a prueba lo que sabes de nuestro puesto. 😄</p>
+    </div>
+
+    <!-- ENCUESTA CON ESTADÍSTICAS -->
+    <div class="borde-animado tarjeta-animada mb-8">
+        <div class="borde-interior p-6">
+            <img src="imagen-encuesta.jpg" alt="Encuesta" class="imagen-tarjeta" onerror="this.src='https://via.placeholder.com/600x180/E63946/FFFFFF?text=📊+ENCUESTA+¿Cuál+es+tu+favorito?'">
+            <h3 class="text-xl font-bold titulo-animado mb-4"><span class="emoji-giro">📊</span> ENCUESTA — ¿Cuál es tu perro favorito?</h3>
+            <p class="text-gray-600 mb-4">Vota por tu perro caliente favorito. ¡Tu voto ayuda mucho!</p>
+
+            <div id="encuestaOpciones">
+                <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'El Clasicazo')">🌭 El Clasicazo — ₡1.200</div>
+                <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'Todo Terreno')">🥑 Todo Terreno — ₡1.800</div>
+                <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'El Loco BBQ')">🔥 El Loco BBQ — ₡2.000</div>
+                <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'El Crunchi Bacon')">🥓 El Crunchi Bacon — ₡2.200</div>
+                <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'TropiDog')">🍍 TropiDog — ₡1.700</div>
+                <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'Dulce Tentación')">🍩 Dulce Tentación — ₡2.000</div>
             </div>
-            <button class="mt-4 bg-primario text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700">✅ Votar</button>
+
+            <button class="boton-accion mt-4" onclick="enviarVoto()">✅ Enviar mi voto</button>
+            <p id="mensajeVoto" class="text-green-600 font-semibold mt-3" style="display:none;">¡Gracias por votar! ❤️ Aquí van los resultados:</p>
+
+            <!-- ESTADÍSTICAS -->
+            <div id="estadisticas" class="mt-6" style="display:none;">
+                <h4 class="font-bold text-lg mb-3">📈 Resultados:</h4>
+                <div id="contenedor-barras"></div>
+            </div>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow-md">
-            <h3 class="text-xl font-bold mb-4">🎯 ¿Cuánto sabes de nosotros?</h3>
-            <p class="mb-3 font-medium">¿Cuánto cuesta el "El Crunchi Bacon"?</p>
-            <div class="space-y-2">
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 1.800</label>
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 2.000</label>
-                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 2.200</label>
-            </div>
-            <button class="mt-4 bg-secundario text-white px-4 py-2 rounded-lg font-medium hover:bg-amber-500">🔍 Ver respuesta</button>
-            <div class="mt-4 pt-4 border-t">
-                <p class="font-medium mb-2">🎲 ¿Cuántos perritos tenemos?</p>
-                <p class="text-gray-600">¡Pista! Cuenta arriba en el menú 👆</p>
-            </div>
+    </div>
+
+    <!-- JUEGO DE PREGUNTAS -->
+    <div class="borde-animado tarjeta-animada">
+        <div class="borde-interior p-6">
+            <img src="imagen-juego.jpg" alt="Juego de preguntas" class="imagen-tarjeta" onerror="this.src='https://via.placeholder.com/600x180/FF9F1C/FFFFFF?text=🎯+JUEGO+DE+PREGUNTAS'">
+            <h3 class="text-xl font-bold titulo-animado mb-4"><span class="emoji-giro">🎯</span> JUEGO — ¿Qué sabes de nuestro puesto?</h3>
+            <p class="text-gray-600 mb-4">Responde y descubre si estás en lo correcto. ¡Al final te diremos por qué!</p>
+
+            <div id="contenedor-preguntas"></div>
+            <button class="boton-accion mt-6" onclick="reiniciarJuego()">🔄 Reiniciar juego</button>
         </div>
     </div>
 </main>
 
 <footer class="bg-oscuro text-white py-6 text-center">
-    <p class="text-lg font-titulo text-xl">Paladar Loco — Proyecto Técnicas 2026</p>
+    <p class="text-base md:text-lg font-titulo font-bold tracking-wide">PALADAR LOCO — PROYECTO TÉCNICAS 2026</p>
 </footer>
+</div>
+
 <script>
-const b=document.getElementById('btnMenu'),m=document.getElementById('menuDesplegable');
-b.onclick=()=>m.classList.toggle('hidden');
-document.querySelectorAll('#menuDesplegable a').forEach(l=>{l.onclick=()=>{m.classList.add('hidden');window.scrollTo(0,0);}});
-document.addEventListener('click',e=>{if(!b.contains(e.target)&&!m.contains(e.target))m.classList.add('hidden');});
-window.scrollTo(0,0);
+const btnMenu = document.getElementById('btnMenu');
+const menuDesplegable = document.getElementById('menuDesplegable');
+btnMenu.addEventListener('click', () => menuDesplegable.classList.toggle('mostrar'));
+
+// === ENCUESTA ===
+let votoSeleccionado = null;
+let votos = {
+    'El Clasicazo': 0,
+    'Todo Terreno': 0,
+    'El Loco BBQ': 0,
+    'El Crunchi Bacon': 0,
+    'TropiDog': 0,
+    'Dulce Tentación': 0
+};
+let totalVotos = 0;
+let yaVoto = false;
+
+// Cargar votos guardados
+function cargarVotos() {
+    const guardado = localStorage.getItem('votosPaladarLoco');
+    if (guardado) {
+        const datos = JSON.parse(guardado);
+        votos = datos.votos || votos;
+        totalVotos = datos.total || 0;
+    }
+}
+cargarVotos();
+
+function seleccionarVoto(elemento, nombre) {
+    if (yaVoto) return;
+    document.querySelectorAll('.encuesta-opcion').forEach(op => op.classList.remove('seleccionada'));
+    elemento.classList.add('seleccionada');
+    votoSeleccionado = nombre;
+}
+
+function enviarVoto() {
+    if (yaVoto) return alert('⚠️ Ya votaste. Mira los resultados abajo.');
+    if (!votoSeleccionado) return alert('⚠️ Por favor selecciona una opción.');
+
+    votos[votoSeleccionado]++;
+    totalVotos++;
+    yaVoto = true;
+
+    // Guardar
+    localStorage.setItem('votosPaladarLoco', JSON.stringify({ votos, total: totalVotos }));
+
+    document.getElementById('mensajeVoto').style.display = 'block';
+    document.getElementById('estadisticas').style.display = 'block';
+    document.querySelectorAll('.encuesta-opcion').forEach(op => op.style.pointerEvents = 'none');
+
+    mostrarEstadisticas();
+}
+
+function mostrarEstadisticas() {
+    const contenedor = document.getElementById('contenedor-barras');
+    contenedor.innerHTML = '';
+
+    for (const [nombre, cantidad] of Object.entries(votos)) {
+        const porcentaje = totalVotos > 0 ? Math.round((cantidad / totalVotos) * 100) : 0;
+        contenedor.innerHTML += `
+            <div class="mb-3">
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="font-semibold">${nombre}</span>
+                    <span class="text-primario font-bold">${cantidad} voto${cantidad !== 1 ? 's' : ''} (${porcentaje}%)</span>
+                </div>
+                <div class="bg-gray-100 rounded-full h-6 overflow-hidden">
+                    <div class="barra" style="width: ${porcentaje}%"></div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// === JUEGO DE PREGUNTAS ===
+const preguntas = [
+    {
+        pregunta: "¿Dónde estará ubicado nuestro puesto de ventas?",
+        opciones: ["En la cafetería", "Dentro del gimnasio", "En el salón de clases", "En la cancha de fútbol"],
+        correcta: 1,
+        explicacion: "✅ ¡Correcto! Estaremos ubicados DENTRO del gimnasio del colegio, donde te atenderemos con gusto."
+    },
+    {
+        pregunta: "¿A qué hora empieza nuestra venta?",
+        opciones: ["A las 7:00 a.m.", "A las 8:20 a.m. (primer recreo)", "A las 12:00 m.d.", "A las 2:00 p.m."],
+        correcta: 1,
+        explicacion: "✅ ¡Exacto! Empezamos a las 8:20 a.m., justo en el primer recreo del día."
+    },
+    {
+        pregunta: "¿A qué hora cerramos?",
+        opciones: ["A las 2:00 p.m.", "A las 3:00 p.m.", "A las 4:00 p.m.", "A las 5:00 p.m."],
+        correcta: 2,
+        explicacion: "✅ ¡Bien! Estaremos atendiendo hasta las 4:00 p.m. No llegues tarde 😄"
+    },
+    {
+        pregunta: "¿Cuántos días estaremos vendiendo?",
+        opciones: ["Todo el mes", "Toda la semana", "Solo un día", "Dos semanas"],
+        correcta: 2,
+        explicacion: "✅ ¡Así es! Estaremos vendiendo SOLO POR UN DÍA. ¡No te lo puedes perder!"
+    },
+    {
+        pregunta: "¿Qué trae incluido cada combo además del perro caliente?",
+        opciones: ["Papitas", "Refresco Big Cola", "Helado", "Galletas"],
+        correcta: 1,
+        explicacion: "✅ ¡Claro que sí! Cada combo lleva su refresco Big Cola incluido. ¡Elige tu sabor favorito!"
+    }
+];
+
+let respondidas = [];
+
+function cargarPreguntas() {
+    const contenedor = document.getElementById('contenedor-preguntas');
+    contenedor.innerHTML = '';
+
+    preguntas.forEach((preg, indice) => {
+        const yaRespondida = respondidas.includes(indice);
+        contenedor.innerHTML += `
+            <div class="mb-6 p-4 bg-gray-50 rounded-xl" id="pregunta-${indice}">
+                <p class="font-bold text-lg mb-3">${indice + 1}. ${preg.pregunta}</p>
+                <div class="opciones-pregunta">
+                    ${preg.opciones.map((op, i) => `
+                        <div class="pregunta-opcion ${yaRespondida ? (i === preg.correcta ? 'correcta' : '') : ''}" 
+                             onclick="verificarRespuesta(${indice}, ${i})" 
+                             id="opcion-${indice}-${i}"
+                             ${yaRespondida ? 'style="pointer-events:none;"' : ''}>
+                            ${op}
+                        </div>
+                    `).join('')}
+                </div>
+                <div id="explicacion-${indice}" class="explicacion" style="display:${yaRespondida ? 'block' : 'none'};">
+                    ${preg.explicacion}
+                </div>
+            </div>
+        `;
+    });
+}
+
+cargarPreguntas();
+
+function verificarRespuesta(indicePregunta, indiceOpcion) {
+    if (respondidas.includes(indicePregunta)) return;
+
+    const pregunta = preguntas[indicePregunta];
+    const opciones = document.querySelectorAll(`#pregunta-${indicePregunta} .pregunta-opcion`);
+    const explicacion = document.getElementById(`explicacion-${indicePregunta}`);
+
+    opciones.forEach((op, i) => {
+        op.style.pointerEvents = 'none';
+        if (i === pregunta.correcta) op.classList.add('correcta');
+        else if (i === indiceOpcion && i !== pregunta.correcta) op.classList.add('incorrecta');
+    });
+
+    explicacion.style.display = 'block';
+    respondidas.push(indicePregunta);
+}
+
+function reiniciarJuego() {
+    if (confirm('¿Seguro que quieres reiniciar el juego?')) {
+        respondidas = [];
+        yaVoto = false;
+        votoSeleccionado = null;
+        localStorage.removeItem('votosPaladarLoco');
+        for (const k of Object.keys(votos)) votos[k] = 0;
+        totalVotos = 0;
+        document.getElementById('mensajeVoto').style.display = 'none';
+        document.getElementById('estadisticas').style.display = 'none';
+        document.querySelectorAll('.encuesta-opcion').forEach(op => {
+            op.classList.remove('seleccionada');
+            op.style.pointerEvents = 'auto';
+        });
+        cargarPreguntas();
+    }
+}
+
+function navegar(event, url) {
+    event.preventDefault();
+    const contenido = document.getElementById('contenido-pagina');
+    contenido.classList.add('animar-salida');
+    setTimeout(() => window.location.href = url, 400);
+}
 </script>
 </body>
 </html>
