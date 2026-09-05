@@ -1,1 +1,79 @@
-<!DOCTYPE html> <html lang="es"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Entretenimiento — Paladar Loco</title> <script src="https://cdn.tailwindcss.com"></script> <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet"> <script>tailwind.config={theme:{extend:{colors:{primario:'#E63946',secundario:'#FF9F1C',claro:'#FFF9F0',oscuro:'#1E1E24'}}}}}</script> </head> <body class="bg-claro"> <nav class="fixed top-0 left-0 w-full bg-white/95 shadow-md z-50"> <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center"> <a href="inicio.html" class="text-2xl font-bold text-primario">🌭 Paladar Loco</a> <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50"><i class="fa fa-bars"></i></button> </div> <div id="menuDesplegable" class="hidden bg-white border-t shadow-lg"> <div class="max-w-7xl mx-auto px-4 py-3 grid md:grid-cols-2 gap-2"> <a href="inicio.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-home text-primario"></i> Inicio</a> <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-cutlery text-primario"></i> Menú</a> <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a> <a href="redes.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-share-alt text-primario"></i> Redes Sociales</a> <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a> <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horarios</a> <a href="entretenimiento.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario md:col-span-2"><i class="fa fa-gamepad"></i> Entretenimiento 🎮</a> </div> </div> </nav> <main class="pt-28 pb-20 px-4 max-w-7xl mx-auto"> <h1 class="text-3xl font-bold text-center mb-4 text-primario">🎮 Entretenimiento</h1> <p class="text-center text-lg text-gray-600 mb-10">¡Diviértete un poco mientras decides qué comer! 😄</p> <div class="grid md:grid-cols-2 gap-8"> <div class="bg-white rounded-2xl p-6 shadow-md"> <h3 class="text-xl font-bold mb-4">📋 Encuesta Rápida</h3> <p class="mb-3 font-medium">¿Cuál es tu perrito favorito?</p> <div class="space-y-2"> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🌭 El Clásico Sencillo</label> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🧀 El Quesudo</label> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🥓 El Tocinero</label> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🔥 El Picantón</label> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🥑 El Paladar Especial</label> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 💪 El Doble Poder</label> </div> <button class="mt-4 bg-primario text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700">✅ Votar</button> </div> <div class="bg-white rounded-2xl p-6 shadow-md"> <h3 class="text-xl font-bold mb-4">🎯 ¿Cuánto sabes de nosotros?</h3> <p class="mb-3 font-medium">¿Cuánto cuesta el "El Quesudo"?</p> <div class="space-y-2"> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 2.500</label> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 3.000</label> <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 3.500</label> </div> <button class="mt-4 bg-secundario text-white px-4 py-2 rounded-lg font-medium hover:bg-amber-500">🔍 Ver respuesta</button> <div class="mt-4 pt-4 border-t"> <p class="font-medium mb-2">🎲 ¿Cuántos perritos tenemos?</p> <p class="text-gray-600">¡Pista! Cuenta arriba en el menú 👆</p> </div> </div> </div> </main> <footer class="bg-oscuro text-white py-6 text-center"><p class="text-sm">© 2026 Paladar Loco — ¡Diviértete! 🎮</p></footer> <script> const b=document.getElementById('btnMenu'),m=document.getElementById('menuDesplegable'); b.onclick=()=>m.classList.toggle('hidden'); document.querySelectorAll('#menuDesplegable a').forEach(l=>{l.onclick=()=>{m.classList.add('hidden');window.scrollTo(0,0);}}); document.addEventListener('click',e=>{if(!b.contains(e.target)&&!m.contains(e.target))m.classList.add('hidden');}); window.scrollTo(0,0); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entretenimiento — Paladar Loco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{primario:'#E63946',secundario:'#FF9F1C',claro:'#FFF9F0',oscuro:'#1E1E24'},fontFamily:{titulo:['Dancing Script','cursive'],cuerpo:['Inter','sans-serif']}}}}</script>
+</head>
+<body class="bg-claro">
+<nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+        <a href="index.html" class="flex items-center gap-3">
+            <img src="logo-paladar-loco.png" alt="Logo" class="h-12 w-auto rounded-lg" />
+            <span class="text-3xl font-titulo font-bold text-primario">Paladar Loco</span>
+        </a>
+        <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg"><i class="fa fa-bars"></i></button>
+    </div>
+    <div id="menuDesplegable" class="hidden bg-white border-t shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 grid md:grid-cols-2 gap-2">
+            <a href="index.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-home text-primario"></i> Inicio</a>
+            <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-cutlery text-primario"></i> Menú</a>
+            <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a>
+            <a href="redes.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-share-alt text-primario"></i> Redes Sociales</a>
+            <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a>
+            <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horarios</a>
+            <a href="entretenimiento.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario md:col-span-2"><i class="fa fa-gamepad"></i> Entretenimiento 🎮</a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-28 pb-20 px-4 max-w-7xl mx-auto">
+    <h1 class="text-4xl font-titulo font-bold text-center mb-4 text-primario">🎮 Entretenimiento</h1>
+    <p class="text-center text-lg text-gray-600 mb-10">¡Diviértete un poco mientras decides qué comer! 😄</p>
+    <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-2xl p-6 shadow-md">
+            <h3 class="text-xl font-bold mb-4">📋 Encuesta Rápida</h3>
+            <p class="mb-3 font-medium">¿Cuál es tu perrito favorito?</p>
+            <div class="space-y-2">
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🌭 El Clasicazo</label>
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🌭 Todo Terreno</label>
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🔥 El Loco BBQ</label>
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🥓 El Crunchi Bacon</label>
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🍍 TropiDog</label>
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="encuesta"> 🍩 Dulce Tentación</label>
+            </div>
+            <button class="mt-4 bg-primario text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700">✅ Votar</button>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-md">
+            <h3 class="text-xl font-bold mb-4">🎯 ¿Cuánto sabes de nosotros?</h3>
+            <p class="mb-3 font-medium">¿Cuánto cuesta el "El Crunchi Bacon"?</p>
+            <div class="space-y-2">
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 1.800</label>
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 2.000</label>
+                <label class="block p-2 rounded-lg hover:bg-red-50 cursor-pointer"><input type="radio" name="juego"> ₡ 2.200</label>
+            </div>
+            <button class="mt-4 bg-secundario text-white px-4 py-2 rounded-lg font-medium hover:bg-amber-500">🔍 Ver respuesta</button>
+            <div class="mt-4 pt-4 border-t">
+                <p class="font-medium mb-2">🎲 ¿Cuántos perritos tenemos?</p>
+                <p class="text-gray-600">¡Pista! Cuenta arriba en el menú 👆</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-oscuro text-white py-6 text-center">
+    <p class="text-lg font-titulo text-xl">Paladar Loco — Proyecto Técnicas 2026</p>
+</footer>
+<script>
+const b=document.getElementById('btnMenu'),m=document.getElementById('menuDesplegable');
+b.onclick=()=>m.classList.toggle('hidden');
+document.querySelectorAll('#menuDesplegable a').forEach(l=>{l.onclick=()=>{m.classList.add('hidden');window.scrollTo(0,0);}});
+document.addEventListener('click',e=>{if(!b.contains(e.target)&&!m.contains(e.target))m.classList.add('hidden');});
+window.scrollTo(0,0);
+</script>
+</body>
+</html>
