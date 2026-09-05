@@ -39,6 +39,13 @@
                 position: relative;
                 z-index: 1;
             }
+            .tarjeta-animada {
+                transition: all 0.3s ease;
+            }
+            .tarjeta-animada:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            }
         }
     </style>
 </head>
@@ -68,6 +75,8 @@
 </nav>
 
 <main class="pt-16">
+
+    <!-- 🎬 PORTADA CON VIDEO -->
     <section class="relative min-h-[calc(100vh-80px)] flex flex-col justify-center items-center text-center text-white overflow-hidden bg-primario">
         <video autoplay muted loop playsinline class="video-fondo">
             <source src="video-fondo.mp4" type="video/mp4">
@@ -80,26 +89,130 @@
         </div>
     </section>
 
+    <!-- ✨ ¿POR QUÉ ELEGIRNOS? -->
     <section class="py-16 px-4 md:px-6 max-w-7xl mx-auto">
         <h2 class="text-3xl font-titulo font-bold text-center mb-12 text-primario">¿Por qué elegirnos?</h2>
         <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+            <div class="bg-white rounded-2xl p-8 shadow-md tarjeta-animada text-center">
                 <span class="text-5xl">🥬</span>
                 <h3 class="text-xl font-bold mt-5 mb-3">Ingredientes de Calidad</h3>
                 <p class="text-gray-600">Solo usamos lo más fresco y de la mejor calidad.</p>
             </div>
-            <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+            <div class="bg-white rounded-2xl p-8 shadow-md tarjeta-animada text-center">
                 <span class="text-5xl">🔥</span>
                 <h3 class="text-xl font-bold mt-5 mb-3">Sabores Únicos</h3>
                 <p class="text-gray-600">Combinaciones deliciosas que te sorprenderán.</p>
             </div>
-            <div class="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
+            <div class="bg-white rounded-2xl p-8 shadow-md tarjeta-animada text-center">
                 <span class="text-5xl">⚡</span>
                 <h3 class="text-xl font-bold mt-5 mb-3">Servicio Rápido</h3>
                 <p class="text-gray-600">Atención amable y sin largas esperas.</p>
             </div>
         </div>
     </section>
+
+    <!-- 🥇 LO MÁS PEDIDO -->
+    <section class="py-16 px-4 md:px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-titulo font-bold text-center mb-12 text-primario">🥇 Lo Más Pedido</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-claro rounded-2xl overflow-hidden shadow-md tarjeta-animada">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=250&fit=crop" alt="El Clasicazo" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-2">🌭 El Clasicazo</h3>
+                        <p class="text-gray-600 mb-3 text-sm">El favorito de todos, ¡simplemente perfecto!</p>
+                        <p class="text-primario font-bold text-xl">₡1.200</p>
+                    </div>
+                </div>
+                <div class="bg-claro rounded-2xl overflow-hidden shadow-md tarjeta-animada">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=250&fit=crop" alt="El Crunchi Bacon" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-2">🥓 El Crunchi Bacon</h3>
+                        <p class="text-gray-600 mb-3 text-sm">Nuestra opción premium, ¡irresistible!</p>
+                        <p class="text-primario font-bold text-xl">₡2.200</p>
+                    </div>
+                </div>
+                <div class="bg-claro rounded-2xl overflow-hidden shadow-md tarjeta-animada">
+                    <img src="https://images.unsplash.com/photo-1551024601-becb338a3e71?w=400&h=250&fit=crop" alt="Dulce Tentación" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-2">🍩 Dulce Tentación</h3>
+                        <p class="text-gray-600 mb-3 text-sm">El postre perfecto para cerrar con broche de oro.</p>
+                        <p class="text-primario font-bold text-xl">₡2.000</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <a href="menu.html" class="inline-block bg-primario text-white px-6 py-2 rounded-full font-medium hover:bg-red-700 transition-all">Ver todo el menú →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 👣 NUESTRO PROCESO -->
+    <section class="py-16 px-4 md:px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-titulo font-bold text-center mb-12 text-primario">👣 Así funciona</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="w-20 h-20 bg-primario text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4 shadow-lg">1</div>
+                <h3 class="text-xl font-bold mb-2">Eliges tu favorito</h3>
+                <p class="text-gray-600">Mira nuestro menú y elige el perrito que más te guste.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-20 h-20 bg-secundario text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4 shadow-lg">2</div>
+                <h3 class="text-xl font-bold mb-2">Preparamos con amor</h3>
+                <p class="text-gray-600">Creamos tu pedido al momento con ingredientes frescos.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4 shadow-lg">3</div>
+                <h3 class="text-xl font-bold mb-2">¡Disfrútalo!</h3>
+                <p class="text-gray-600">Saborea cada bocado y vuelve por más.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 💬 LO QUE DICEN -->
+    <section class="py-16 px-4 md:px-6 bg-white">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-titulo font-bold text-center mb-12 text-primario">💬 Lo que opinan</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-claro rounded-2xl p-6 shadow-md tarjeta-animada">
+                    <div class="text-yellow-400 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p class="text-gray-600 italic">"¡El Crunchi Bacon es increíble! Tocineta crujiente y el sabor es espectacular."</p>
+                    <p class="font-bold mt-4 text-primario">— María F.</p>
+                </div>
+                <div class="bg-claro rounded-2xl p-6 shadow-md tarjeta-animada">
+                    <div class="text-yellow-400 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p class="text-gray-600 italic">"Los mejores precios y la atención es súper amable. ¡Vuelvo todos los días!"</p>
+                    <p class="font-bold mt-4 text-primario">— José R.</p>
+                </div>
+                <div class="bg-claro rounded-2xl p-6 shadow-md tarjeta-animada">
+                    <div class="text-yellow-400 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p class="text-gray-600 italic">"El TropiDog con piña es una delicia. ¡Paladar Loco es lo mejor!"</p>
+                    <p class="font-bold mt-4 text-primario">— Ana S.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📸 GALERÍA RÁPIDA -->
+    <section class="py-16 px-4 md:px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-titulo font-bold text-center mb-12 text-primario">📸 Un poquito de nuestro sabor</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=300&h=300&fit=crop" alt="Perro caliente" class="rounded-xl shadow-md w-full h-40 object-cover hover:scale-105 transition-transform duration-300">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=300&fit=crop" alt="Perro caliente" class="rounded-xl shadow-md w-full h-40 object-cover hover:scale-105 transition-transform duration-300">
+            <img src="https://images.unsplash.com/photo-1551024601-becb338a3e71?w=300&h=300&fit=crop" alt="Churros" class="rounded-xl shadow-md w-full h-40 object-cover hover:scale-105 transition-transform duration-300">
+            <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=300&h=300&fit=crop" alt="Perro caliente" class="rounded-xl shadow-md w-full h-40 object-cover hover:scale-105 transition-transform duration-300">
+        </div>
+    </section>
+
+    <!-- 🏫 SOBRE NUESTRO PROYECTO (corto) -->
+    <section class="py-16 px-4 md:px-6 bg-gradient-to-r from-primario to-red-600 text-white text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-titulo font-bold mb-6">🏫 Nuestro Proyecto</h2>
+            <p class="text-lg leading-relaxed opacity-95">Somos estudiantes de la <strong>Sección 11-3</strong> y este es nuestro <strong>Proyecto de Técnicas</strong>. Con mucho esfuerzo y cariño creamos Paladar Loco para ofrecerles lo mejor. ¡Gracias por apoyarnos!</p>
+            <a href="nosotros.html" class="inline-block mt-6 bg-white text-primario px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-all">Conoce más sobre nosotros →</a>
+        </div>
+    </section>
+
 </main>
 
 <footer class="bg-oscuro text-white py-6 text-center">
