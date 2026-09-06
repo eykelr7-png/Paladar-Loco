@@ -23,7 +23,6 @@
         * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
         html { scroll-behavior: smooth; }
         body { margin: 0; padding: 0; overflow-x: hidden; background: #FFF9F0; }
-
         /* Borde animado suave */
         .borde-animado {
             position: relative; border-radius: 20px; padding: 5px; overflow: hidden;
@@ -39,7 +38,6 @@
         .borde-interior {
             position: relative; z-index: 1; background: white; border-radius: 17px; height: 100%;
         }
-
         /* Título con colores animados */
         .titulo-animado {
             background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
@@ -52,33 +50,35 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
         /* Emojis girando suavemente */
         .emoji-giro { display: inline-block; animation: giro-lento 4s ease-in-out infinite; }
         @keyframes giro-lento { 0% { transform: rotateY(-20deg); } 50% { transform: rotateY(20deg); } 100% { transform: rotateY(-20deg); } }
-
         .titulo-seccion { position: relative; display: inline-block; }
         .titulo-seccion::after {
             content: ''; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
             width: 55%; height: 3px; background: linear-gradient(90deg, transparent, #E63946, #FF9F1C, #E63946, transparent);
             border-radius: 2px;
         }
-
         .tarjeta-animada { transition: transform 0.25s ease; }
         .tarjeta-animada:hover { transform: translateY(-5px); }
-
         #btnMenu { transition: transform 0.25s ease; }
         #btnMenu:hover { transform: rotate(90deg) scale(1.08); background: linear-gradient(135deg, #E63946, #FF9F1C); color: white; }
         #menuDesplegable { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
         #menuDesplegable.mostrar { max-height: 500px; padding: 10px 0; }
         #menuDesplegable a:hover { transform: translateX(6px); background: linear-gradient(90deg, rgba(230,57,70,0.08), transparent); }
-
         .animar-salida { animation: salida 0.4s ease-in forwards; }
         @keyframes salida { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-15px); } }
+        #contenido-pagina {
+            opacity: 0; transform: translateY(20px);
+            animation: pagina-entrada 0.8s ease-out forwards;
+        }
+        @keyframes pagina-entrada {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="bg-claro text-oscuro font-cuerpo antialiased">
-
 <div id="contenido-pagina">
 <nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
@@ -102,7 +102,6 @@
         </div>
     </div>
 </nav>
-
 <main class="pt-24 pb-16 px-4 md:px-6 max-w-5xl mx-auto">
     <div class="text-center mb-12">
         <h1 class="text-3xl md:text-4xl font-titulo titulo-animado titulo-seccion inline-block">
@@ -110,7 +109,6 @@
         </h1>
         <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Conoce quiénes somos y por qué creamos Paladar Loco.</p>
     </div>
-
     <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
         <!-- Imagen con borde animado -->
         <div class="borde-animado tarjeta-animada">
@@ -118,7 +116,6 @@
                 <img src="imagenes/equipo.jpg" alt="Nuestro equipo" class="w-full h-72 object-cover rounded-xl" onerror="this.src='https://via.placeholder.com/400x300/E63946/FFFFFF?text=Paladar+Loco'">
             </div>
         </div>
-
         <!-- Texto e información -->
         <div class="space-y-5">
             <div class="borde-animado">
@@ -127,7 +124,6 @@
                     <p class="text-gray-700 leading-relaxed">Somos estudiantes de la <strong>Sección 11-3</strong> y este es nuestro <strong>Proyecto de Técnicas</strong>. Con mucho esfuerzo, dedicación y cariño creamos Paladar Loco para ofrecerles los mejores perros calientes.</p>
                 </div>
             </div>
-
             <div class="borde-animado">
                 <div class="borde-interior p-5">
                     <h3 class="text-xl font-bold titulo-animado mb-3"><span class="emoji-giro">👩‍🏫</span> Nuestra Profesora</h3>
@@ -136,7 +132,6 @@
             </div>
         </div>
     </div>
-
     <div class="borde-animado">
         <div class="borde-interior p-6 md:p-8">
             <h3 class="text-xl md:text-2xl font-bold titulo-animado mb-4 text-center"><span class="emoji-giro">💡</span> Nuestra Misión</h3>
@@ -146,17 +141,14 @@
         </div>
     </div>
 </main>
-
 <footer class="bg-oscuro text-white py-6 text-center">
     <p class="text-base md:text-lg font-titulo font-bold tracking-wide">PALADAR LOCO — PROYECTO TÉCNICAS 2026</p>
 </footer>
 </div>
-
 <script>
 const btnMenu = document.getElementById('btnMenu');
 const menuDesplegable = document.getElementById('menuDesplegable');
 btnMenu.addEventListener('click', () => menuDesplegable.classList.toggle('mostrar'));
-
 function navegar(event, url) {
     event.preventDefault();
     const contenido = document.getElementById('contenido-pagina');
