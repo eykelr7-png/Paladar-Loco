@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio — Paladar Loco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primario: '#E63946', secundario: '#FF9F1C', claro: '#FFF9F0', oscuro: '#1E1E24' },
+                    fontFamily: { titulo: ['Poppins', 'sans-serif'], cuerpo: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        body { margin: 0; padding: 0; overflow-x: hidden; background: #FFF9F0; }
+
+        /* === ANIMACIONES DE ENTRADA Y SALIDA === */
+        #contenido-pagina {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: pagina-entrada 0.5s ease-out forwards;
+            animation-delay: 0.05s;
+        }
+        @keyframes pagina-entrada {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animar-salida {
+            animation: pagina-salida 0.35s ease-in forwards !important;
+        }
+        @keyframes pagina-salida {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-15px); }
+        }
+
+        /* === BIENVENIDA === */
+        #pantalla-bienvenida {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;
+            background: linear-gradient(135deg, #E63946, #991A1F, #E63946);
+            background-size: 300% 300%; animation: fondo-bienvenida 3s ease-in-out infinite;
+            opacity: 1; visibility: visible;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out, visibility 0.6s;
+        }
+        #pantalla-bienvenida.ocultar {
+            opacity: 0 !important; visibility: hidden !important;
+            transform: translateY(-30px) scale(1.03); pointer-events: none;
+        }
+        @keyframes fondo-bienvenida {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .figura-fondo {
+            position: absolute; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+            animation: flotar-figura 7s ease-in-out infinite;
+        }
+        .figura-fondo:nth-child(1) { width: 220px; height: 220px; top: 10%; left: 8%; }
+        .figura-fondo:nth-child(2) { width: 160px; height: 160px; bottom: 15%; right: 8%; animation-delay: 0.5s; }
+        .figura-fondo:nth-child(3) { width: 100px; height: 100px; top: 25%; right: 12%; animation-delay: 1s; }
+        @keyframes flotar-figura {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
+        .bienvenida-texto {
+            font-family: 'Poppins', sans-serif; font-size: clamp(1.5rem, 5vw, 2.8rem);
+            font-weight: 900; color: white; text-align: center;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4); padding: 0 25px;
+            opacity: 0; transform: translateY(30px);
+            animation: texto-entrada 0.5s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+        @keyframes texto-entrada {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .bienvenida-logo {
+            width: clamp(170px, 38vw, 260px); height: auto;
+            border-radius: 24px; margin-top: 25px;
+            opacity: 0; transform: scale(0.5);
+            box-shadow: 0 0 50px rgba(255,255,255,0.5);
+            animation: logo-entrada 0.7s ease-out forwards;
+            animation-delay: 0.8s;
+            display: block; margin-left: auto; margin-right: auto;
+            min-height: 170px; background: rgba(255,255,255,0.1);
+        }
+        @keyframes logo-entrada {
+            0% { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+            70% { opacity: 1; transform: scale(1.08) rotate(5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        /* === BORDES ANIMADOS === */
+        .borde-animado {
+            position: relative; border-radius: 20px; padding: 5px; overflow: hidden;
+        }
+        .borde-animado::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(#E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            animation: borde-gira-lento 6s linear infinite; transform-origin: center;
+            will-change: transform;
+        }
+        @keyframes borde-gira-lento {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .borde-interior {
+            position: relative; z-index: 1; background: white; border-radius: 17px; height: 100%;
+        }
+
+        /* === TITULOS Y ANIMACIONES === */
+        .titulo-animado {
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
+            color: transparent; font-weight: 900; font-family: 'Poppins', sans-serif;
+            animation: texto-colores 3s ease infinite;
+            will-change: background-position;
+        }
+        @keyframes texto-colores {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .precio-animado {
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
+            color: transparent; font-weight: 900; font-size: 1.25rem; animation: texto-colores 3s ease infinite;
+            will-change: background-position;
+        }
+        .emoji-giro {
+            display: inline-block; animation: giro-lento 4s ease-in-out infinite;
+            will-change: transform;
+        }
+        @keyframes giro-lento {
+            0% { transform: rotateY(-20deg); }
+            50% { transform: rotateY(20deg); }
+            100% { transform: rotateY(-20deg); }
+        }
+        .titulo-neon {
+            color: #ffffff; position: relative; display: inline-block;
+            font-family: 'Poppins', sans-serif; font-weight: 900;
+            text-shadow: -1px -1px 0 #E63946, 1px -1px 0 #E63946, -1px 1px 0 #E63946, 1px 1px 0 #E63946, 0 0 10px #E63946, 0 0 20px #E63946;
+            animation: borde-rojo-amarillo 2.5s ease-in-out infinite alternate;
+        }
+        @keyframes borde-rojo-amarillo {
+            0% { text-shadow: -1px -1px 0 #E63946, 1px -1px 0 #E63946, -1px 1px 0 #E63946, 1px 1px 0 #E63946, 0 0 10px #E63946, 0 0 20px #E63946, 0 0 30px #E63946; }
+            100% { text-shadow: -1px -1px 0 #FF9F1C, 1px -1px 0 #FF9F1C, -1px 1px 0 #FF9F1C, 1px 1px 0 #FF9F1C, 0 0 10px #FF9F1C, 0 0 20px #FF9F1C, 0 0 30px #FF9F1C; }
+        }
+        .titulo-seccion { position: relative; display: inline-block; }
+        .titulo-seccion::after {
+            content: ''; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
+            width: 55%; height: 3px; background: linear-gradient(90deg, transparent, #E63946, #FF9F1C, #E63946, transparent);
+            border-radius: 2px;
+        }
+
+        /* === BARRAS DE ESTADISTICAS === */
+        .barra-container {
+            background: #eee; border-radius: 12px; height: 28px; overflow: hidden;
+            margin-top: 8px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); position: relative;
+        }
+        .barra-nivel {
+            height: 100%; border-radius: 12px; display: flex; align-items: center;
+            justify-content: flex-end; padding-right: 10px; color: white; font-weight: bold;
+            font-size: 12px; position: relative; overflow: hidden; width: 0;
+            animation: llenar-barra 1.8s ease-out forwards;
+        }
+        .barra-nivel::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 300%; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 25%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0) 100%);
+            animation: onda-agua 2.5s ease-in-out infinite; opacity: 0.7;
+        }
+        @keyframes llenar-barra { to { width: var(--porcentaje); } }
+        @keyframes onda-agua {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(33%); }
+        }
+        .barra-roja { background: linear-gradient(90deg, #C42A38, #E63946, #FF4D5A); }
+        .barra-amarilla { background: linear-gradient(90deg, #E68A00, #FF9F1C, #FFC107); }
+        .barra-azul { background: linear-gradient(90deg, #1D4ED8, #2563EB, #60A5FA); }
+        .barra-verde { background: linear-gradient(90deg, #15803D, #16A34A, #4ADE80); }
+        .barra-morado { background: linear-gradient(90deg, #7C3AED, #9333EA, #D8B4FE); }
+
+        /* === GENERALES === */
+        .sombra-texto { text-shadow: 0 3px 10px rgba(0,0,0,0.35); }
+        .video-fondo { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2; z-index: 0; }
+        .capa-sobre-video { position: relative; z-index: 1; width: 100%; padding: 20px; }
+        .tarjeta-animada { transition: transform 0.25s ease; }
+        .tarjeta-animada:hover { transform: translateY(-5px); }
+        .galeria-img { transition: transform 0.35s ease; }
+        .galeria-img:hover { transform: scale(1.05); }
+        .cuenta-regresiva { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+        .cuenta-item { background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 2px solid rgba(255,255,255,0.3); border-radius: 14px; padding: 11px 14px; min-width: 68px; text-align: center; }
+        .cuenta-numero { font-size: 27px; font-weight: 900; font-family: 'Poppins', sans-serif; color: white; text-shadow: 0 0 8px #FF9F1C, 0 0 16px #FF9F1C; display: block; line-height: 1; }
+        .cuenta-texto { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; margin-top: 3px; display: block; }
+        @media (min-width: 640px) {
+            .cuenta-item { min-width: 82px; padding: 14px 18px; }
+            .cuenta-numero { font-size: 34px; }
+            .cuenta-texto { font-size: 11px; }
+        }
+        @media (min-width: 1024px) {
+            .cuenta-item { min-width: 95px; padding: 16px 22px; }
+            .cuenta-numero { font-size: 42px; }
+        }
+        #btnMenu { transition: transform 0.25s ease, background 0.25s ease; }
+        #btnMenu:hover { transform: rotate(90deg) scale(1.08); background: linear-gradient(135deg, #E63946, #FF9F1C); color: white; }
+        #menuDesplegable { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        #menuDesplegable.mostrar { max-height: 500px; padding: 10px 0; }
+        #menuDesplegable a:hover { transform: translateX(6px); background: linear-gradient(90deg, rgba(230,57,70,0.08), transparent); }
+    </style>
+</head>
+<body class="bg-claro text-oscuro font-cuerpo antialiased">
+
+<!-- PANTALLA DE BIENVENIDA -->
+<div id="pantalla-bienvenida">
+    <div class="figura-fondo"></div>
+    <div class="figura-fondo"></div>
+    <div class="figura-fondo"></div>
+    <h1 class="bienvenida-texto">Bienvenidos a Paladar Loco</h1>
+    <img src="logo-paladar-loco.png" alt="Logo Paladar Loco" class="bienvenida-logo">
+</div>
+
+<div id="contenido-pagina">
+
+<nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+        <a href="index.html" class="flex items-center gap-3" onclick="navegar(event, 'index.html')">
+            <img src="logo-paladar-loco.png" alt="Logo" class="h-10 md:h-12 w-auto rounded-lg">
+            <span class="text-xl md:text-2xl lg:text-3xl font-titulo font-extrabold text-primario tracking-wide">PALADAR LOCO</span>
+        </a>
+        <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div id="menuDesplegable" class="md:px-6">
+        <div class="max-w-7xl mx-auto px-4 md:px-0 py-3 grid md:grid-cols-2 gap-2">
+            <a href="index.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario flex items-center gap-2"><i class="fa fa-home"></i> Inicio</a>
+            <a href="menu.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'menu.html')"><i class="fa fa-cutlery text-primario"></i> Menú</a>
+            <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'pagos.html')"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a>
+            <a href="redes.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'redes.html')"><i class="fa fa-share-alt text-primario"></i> Redes Sociales</a>
+            <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'nosotros.html')"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a>
+            <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'ubicacion.html')"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horario</a>
+            <a href="entretenimiento.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2 md:col-span-2" onclick="navegar(event, 'entretenimiento.html')"><i class="fa fa-gamepad text-primario"></i> Entretenimiento — Encuestas, juegos y más 🎮</a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-16">
+    <!-- PORTADA -->
+    <section class="relative min-h-[calc(100vh-80px)] flex flex-col justify-center items-center text-center text-white overflow-hidden bg-primario">
+        <video autoplay muted loop playsinline class="video-fondo">
+            <source src="video-fondo.mp4" type="video/mp4">
+        </video>
+        <div class="capa-sobre-video">
+            <h1 class="text-[clamp(2rem,6vw,4rem)] font-titulo font-black mb-3 md:mb-4 tracking-wider titulo-neon">PALADAR LOCO</h1>
+            <p class="text-[clamp(1rem,2.5vw,1.4rem)] opacity-95 max-w-2xl mx-auto mb-2 md:mb-3 sombra-texto font-medium">
+                <span class="emoji-giro">🌭</span> Sabores auténticos en cada perro caliente <span class="emoji-giro" style="animation-delay: 0.7s;">✨</span>
+            </p>
+            <p class="text-sm md:text-lg opacity-90 max-w-xl mx-auto mb-4 md:mb-6 sombra-texto">
+                El sabor que te hará volver por más y te conquistará desde el primer bocado <span class="emoji-giro" style="animation-delay: 1.4s;">😍</span>
+            </p>
+            <div class="mt-4 md:mt-6 mb-4">
+                <p class="text-base md:text-xl font-bold sombra-texto mb-2">
+                    <span class="emoji-giro" style="animation-delay: 0.35s;">⏰</span> ¡Nuestras ventas comienzan en!
+                </p>
+                <div class="cuenta-regresiva">
+                    <div class="cuenta-item"><span class="cuenta-numero" id="dias">00</span><span class="cuenta-texto">Días</span></div>
+                    <div class="cuenta-item"><span class="cuenta-numero" id="horas">00</span><span class="cuenta-texto">Horas</span></div>
+                    <div class="cuenta-item"><span class="cuenta-numero" id="minutos">00</span><span class="cuenta-texto">Minutos</span></div>
+                    <div class="cuenta-item"><span class="cuenta-numero" id="segundos">00</span><span class="cuenta-texto">Segundos</span></div>
+                </div>
+                <p class="text-xs md:text-sm opacity-80 mt-3 sombra-texto">📅 25 de Septiembre · 8:20 AM</p>
+            </div>
+            <a href="menu.html" onclick="navegar(event, 'menu.html')" class="inline-block bg-secundario text-white font-bold px-6 md:px-8 py-2 md:py-3 rounded-full text-base md:text-lg shadow-lg hover:bg-amber-500 transition-all mt-2 md:mt-4">
+                Ver nuestro menú <span class="emoji-giro" style="animation-delay: 1.05s;">👇</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ¿POR QUÉ ELEGIRNOS? -->
+    <section class="py-12 md:py-16 px-4 md:px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-10 md:mb-12">
+            <h2 class="text-2xl md:text-3xl font-titulo font-extrabold titulo-animado titulo-seccion inline-block">
+                <span class="emoji-giro">🤔</span> ¿POR QUÉ ELEGIRNOS?
+            </h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+            <div class="borde-animado tarjeta-animada">
+                <div class="borde-interior p-6 md:p-8 text-center">
+                    <span class="text-4xl md:text-5xl emoji-giro">🥬</span>
+                    <h3 class="text-lg md:text-xl font-bold mt-4 md:mt-5 mb-2 md:mb-3">Ingredientes de Calidad</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Solo usamos lo más fresco y de la mejor calidad.</p>
+                </div>
+            </div>
+            <div class="borde-animado tarjeta-animada">
+                <div class="borde-interior p-6 md:p-8 text-center">
+                    <span class="text-4xl md:text-5xl emoji-giro" style="animation-delay:0.5s;">🔥</span>
+                    <h3 class="text-lg md:text-xl font-bold mt-4 md:mt-5 mb-2 md:mb-3">Sabores Únicos</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Combinaciones deliciosas que te sorprenderán.</p>
+                </div>
+            </div>
+            <div class="borde-animado tarjeta-animada">
+                <div class="borde-interior p-6 md:p-8 text-center">
+                    <span class="text-4xl md:text-5xl emoji-giro" style="animation-delay:1s;">⚡</span>
+                    <h3 class="text-lg md:text-xl font-bold mt-4 md:mt-5 mb-2 md:mb-3">Servicio Rápido</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Atención amable y sin largas esperas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LO MÁS TOP -->
+    <section class="py-12 md:py-16 px-4 md:px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10 md:mb-12">
+                <h2 class="text-2xl md:text-3xl font-titulo font-extrabold titulo-animado titulo-seccion inline-block">
+                    <span class="emoji-giro">🏆</span> LO MÁS TOP
+                </h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="borde-animado tarjeta-animada overflow-hidden">
+                    <div class="borde-interior">
+                        <img src="el_crunchi_bacon.jpg" alt="El Crunchi Bacon" class="w-full h-44 md:h-48 object-cover rounded-t-[15px]" onerror="this.src='https://via.placeholder.com/400x300/DAA520/FFFFFF?text=El+Crunchi+Bacon'">
+                        <div class="p-4 md:p-5">
+                            <h3 class="text-lg md:text-xl font-bold mb-2"><span class="emoji-giro">🥓</span> El Crunchi Bacon</h3>
+                            <p class="text-gray-600 mb-3 text-xs md:text-sm">Tocineta crujiente, queso derretido y sabor premium. ¡El favorito de todos!</p>
+                            <p class="precio-animado">₡2.200</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="borde-animado tarjeta-animada overflow-hidden">
+                    <div class="borde-interior">
+                        <img src="dulce_tentacion.jpg" alt="Dulce Tentación" class="w-full h-44 md:h-48 object-cover rounded-t-[15px]" onerror="this.src='https://via.placeholder.com/400x300/FF69B4/FFFFFF?text=Dulce+Tentaci%C3%B3n'">
+                        <div class="p-4 md:p-5">
+                            <h3 class="text-lg md:text-xl font-bold mb-2"><span class="emoji-giro" style="animation-delay:0.5s;">🍩</span> Dulce Tentación</h3>
+                            <p class="text-gray-600 mb-3 text-xs md:text-sm">El toque dulce que equilibra todo. ¡Irresistible!</p>
+                            <p class="precio-animado">₡2.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="borde-animado tarjeta-animada overflow-hidden">
+                    <div class="borde-interior">
+                        <img src="el_loco_bbq.jpg" alt="El Loco BBQ" class="w-full h-44 md:h-48 object-cover rounded-t-[15px]" onerror="this.src='https://via.placeholder.com/400x300/8B4513/FFFFFF?text=El+Loco+BBQ'">
+                        <div class="p-4 md:p-5">
+                            <h3 class="text-lg md:text-xl font-bold mb-2"><span class="emoji-giro" style="animation-delay:1s;">🔥</span> El Loco BBQ</h3>
+                            <p class="text-gray-600 mb-3 text-xs md:text-sm">Salsa barbacoa ahumada, cebolla caramelizada y mucho sabor. ¡Una locura!</p>
+                            <p class="precio-animado">₡2.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <a href="menu.html" onclick="navegar(event, 'menu.html')" class="inline-block bg-primario text-white px-6 py-2 rounded-full font-medium hover:bg-red-700 transition-all">Ver todo el menú →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESTADISTICAS -->
+    <section class="py-12 md:py-16 px-4 md:px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-10 md:mb-12">
+            <h2 class="text-2xl md:text-3xl font-titulo font-extrabold titulo-animado titulo-seccion inline-block">
+                <span class="emoji-giro">🌍</span> LAS 5 COMIDAS RÁPIDAS MÁS POPULARES DEL MUNDO
+            </h2>
+            <p class="text-gray-600 mt-4 max-w-2xl mx-auto text-sm md:text-base">Según datos de consultoras internacionales como <strong>Euromonitor International</strong>, <strong>Statista</strong> y reportes de cadenas mundiales:</p>
+        </div>
+        <div class="space-y-5 max-w-3xl mx-auto">
+            <div class="borde-animado tarjeta-animada">
+                <div class="borde-interior p-5 md:p-6">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-lg">🍔 Hamburguesas</h3>
+                        <span class="font-bold text-primario">95%</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Líder indiscutible — Casi el 95% de los países del mundo las consumen.</p>
+                    <div class="barra-container"><div class="barra-nivel barra-roja" style="--porcentaje: 95%">95%</div></div>
+                </div>
+            </div>
+            <div class="borde-animado tarjeta-animada">
+                <div class="borde-interior p-5 md:p-6">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-lg">🍕 Pizza</h3>
+                        <span class="font-bold text-primario">90%</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">La favorita global — Se consumen más de 5 mil millones de pizzas al año.</p>
+                    <div class="barra-container"><div class="barra-nivel barra-amarilla" style="--porcentaje: 90%">90%</div></div>
+                </div>
+            </div>
+            <div class="borde-animado tarjeta-animada">
+                <div class="borde-interior p-5 md:p-6">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-lg">🌭 Perros Calientes</h3>
+                        <span class="font-bold text-primario">75%</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">¡Nuestra especialidad! — Se venden miles de millones al año en todo el mundo.</p>
+                    <div class="barra-container"><div class="barra-nivel barra-azul" style="--porcentaje: 75%">75%</div></div>
+                </div>
+            </div>
+            <div class="borde-animado tarjeta-animada">
+                <div class="borde-interior p-5 md:p-6">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-lg">🌮 Tacos</h3>
+                        <span class="font-bold text-primario">65%</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">Orgullo mexicano — Su popularidad sigue creciendo en todo el planeta.</p>
+                    <div class="barra-container"><div class="barra-nivel barra-verde" style="--porcentaje: 65%">65%</div></div>
+                </div>
+            </div>
+            <div class="borde-animado tarjeta-animada">
+                <div class="borde-interior p-5 md:p-6">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-lg">🍗 Pollo Frito</h3>
+                        <span class="font-bold text-primario">60%</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-2">El rey crujiente — La comida rápida que más crece en Asia y África.</p>
+                    <div class="barra-container"><div class="barra-nivel barra-morado" style="--porcentaje: 60%">60%</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section class="py-12 md:py-16 px-4 md:px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-10 md:mb-12">
+            <h2 class="text-2xl md:text-3xl font-titulo font-extrabold titulo-animado titulo-seccion inline-block">
+                <span class="emoji-giro">📸</span> UN POQUITO DE NUESTRO SABOR
+            </h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <div class="borde-animado rounded-xl galeria-img">
+                <img src="galeria_1.jpg" alt="Perro caliente" class="w-full h-32 md:h-40 object-cover rounded-[9px]" onerror="this.src='https://via.placeholder.com/300x200/E63946/FFFFFF?text=Foto+1'">
+            </div>
+            <div class="borde-animado rounded-xl galeria-img">
+                <img src="galeria_2.jpg" alt="Perro caliente" class="w-full h-32 md:h-40 object-cover rounded-[9px]" onerror="this.src='https://via.placeholder.com/300x200/FF9F1C/FFFFFF?text=Foto+2'">
+            </div>
+            <div class="borde-animado rounded-xl galeria-img">
+                <img src="galeria_3.jpg" alt="Churros" class="w-full h-32 md:h-40 object-cover rounded-[9px]" onerror="this.src='https://via.placeholder.com/300x200/FFD700/FFFFFF?text=Foto+3'">
+            </div>
+            <div class="borde-animado rounded-xl galeria-img">
+                <img src="galeria_4.jpg" alt="Perro caliente" class="w-full h-32 md:h-40 object-cover rounded-[9px]" onerror="this.src='https://via.placeholder.com/300x200/FF6347/FFFFFF?text=Foto+4'">
+            </div>
+        </div>
+    </section>
+
+    <!-- PROYECTO -->
+    <section class="py-12 md:py-16 px-4 md:px-6 bg-gradient-to-r from-primario to-red-600 text-white text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-titulo font-extrabold mb-4 md:mb-6 tracking-wide">
+                <span class="emoji-giro">🏫</span> NUESTRO PROYECTO
+            </h2>
+            <p class="text-base md:text-lg leading-relaxed opacity-95">Somos estudiantes de la <strong>Sección 11-3</strong> y este es nuestro <strong>Proyecto de Técnicas</strong>. Con mucho esfuerzo y cariño creamos Paladar Loco para ofrecerles lo mejor. ¡Gracias por apoyarnos!</p>
+            <a href="nosotros.html" onclick="navegar(event, 'nosotros.html')" class="inline-block mt-5 md:mt-6 bg-white text-primario px-5 md:px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-all">Conoce más sobre nosotros →</a>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-oscuro text-white py-6 text-center">
+    <p class="text-base md:text-lg font-titulo font-bold tracking-wide">PALADAR LOCO — PROYECTO TÉCNICAS 2026</p>
+</footer>
+
+</div>
+
+<script>
+'use strict';
+
+// BIENVENIDA
+window.addEventListener('load', function() {
+    const bienvenidaMostrada = sessionStorage.getItem('bienvenidaMostrada');
+    const pantallaBienvenida = document.getElementById('pantalla-bienvenida');
+    const contenidoPagina = document.getElementById('contenido-pagina');
+
+    if (bienvenidaMostrada === 'si') {
+        if (pantallaBienvenida) pantallaBienvenida.classList.add('ocultar');
+    } else {
+        setTimeout(function() {
+            if (pantallaBienvenida) pantallaBienvenida.classList.add('ocultar');
+            sessionStorage.setItem('bienvenidaMostrada', 'si');
+        }, 2000);
+    }
+});
+
+// CUENTA REGRESIVA
+const FECHA_VENTA = new Date('2026-09-25T08:20:00-06:00');
+var diasEl = document.getElementById('dias');
+var horasEl = document.getElementById('horas');
+var minutosEl = document.getElementById('minutos');
+var segundosEl = document.getElementById('segundos');
+
+function actualizarCuentaRegresiva() {
+    try {
+        var diferencia = FECHA_VENTA - Date.now();
+        if (diferencia > 0) {
+            var dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            var horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            var segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+            diasEl.textContent = String(dias).padStart(2, '0');
+            horasEl.textContent = String(horas).padStart(2, '0');
+            minutosEl.textContent = String(minutos).padStart(2, '0');
+            segundosEl.textContent = String(segundos).padStart(2, '0');
+        } else {
+            diasEl.textContent = '🎉'; horasEl.textContent = '¡Ya'; minutosEl.textContent = 'llegó'; segundosEl.textContent = '!';
+        }
+    } catch (e) {}
+}
+actualizarCuentaRegresiva();
+setInterval(actualizarCuentaRegresiva, 1000);
+
+// MENU
+const btnMenu = document.getElementById('btnMenu');
+const menuDesplegable = document.getElementById('menuDesplegable');
+btnMenu.addEventListener('click', function() {
+    menuDesplegable.classList.toggle('mostrar');
+});
+
+// NAVEGACION CON ANIMACION
+function navegar(event, url) {
+    event.preventDefault();
+    const contenido = document.getElementById('contenido-pagina');
+    contenido.classList.add('animar-salida');
+    setTimeout(function() {
+        window.location.href = url;
+    }, 350);
+}
+</script>
+
+</body>
+</html>
