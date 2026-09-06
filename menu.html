@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú — Paladar Loco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primario: '#E63946', secundario: '#FF9F1C', claro: '#FFF9F0', oscuro: '#1E1E24' },
+                    fontFamily: { titulo: ['Poppins', 'sans-serif'], cuerpo: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        body { margin: 0; padding: 0; overflow-x: hidden; background: #FFF9F0; }
+
+        /* === ANIMACIONES DE ENTRADA Y SALIDA === */
+        #contenido-pagina {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: pagina-entrada 0.5s ease-out forwards;
+            animation-delay: 0.05s;
+        }
+        @keyframes pagina-entrada {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animar-salida {
+            animation: pagina-salida 0.35s ease-in forwards !important;
+        }
+        @keyframes pagina-salida {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-15px); }
+        }
+
+        .borde-animado {
+            position: relative; border-radius: 20px; padding: 5px; overflow: hidden;
+        }
+        .borde-animado::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(#E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            animation: borde-gira-lento 6s linear infinite; transform-origin: center;
+            will-change: transform;
+        }
+        @keyframes borde-gira-lento {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .borde-interior {
+            position: relative; z-index: 1; background: white; border-radius: 17px; height: 100%;
+        }
+        .titulo-animado {
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
+            color: transparent; font-weight: 900; font-family: 'Poppins', sans-serif;
+            animation: texto-colores 3s ease infinite; will-change: background-position;
+        }
+        @keyframes texto-colores {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .mas-info {
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 300% 100%; color: white; font-weight: bold; padding: 8px 16px;
+            border-radius: 20px; display: inline-block; animation: boton-colores 3s ease infinite;
+            border: none; cursor: pointer; transition: transform 0.2s ease;
+            will-change: background-position;
+        }
+        .mas-info:hover { transform: scale(1.05); }
+        @keyframes boton-colores {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .precio-animado {
+            background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
+            background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
+            color: transparent; font-weight: 900; font-size: 1.25rem; animation: texto-colores 3s ease infinite;
+            will-change: background-position;
+        }
+        .emoji-giro {
+            display: inline-block; animation: giro-lento 4s ease-in-out infinite;
+            will-change: transform;
+        }
+        @keyframes giro-lento {
+            0% { transform: rotateY(-20deg); }
+            50% { transform: rotateY(20deg); }
+            100% { transform: rotateY(-20deg); }
+        }
+        .titulo-seccion { position: relative; display: inline-block; }
+        .titulo-seccion::after {
+            content: ''; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
+            width: 55%; height: 3px; background: linear-gradient(90deg, transparent, #E63946, #FF9F1C, #E63946, transparent);
+            border-radius: 2px;
+        }
+        .tarjeta-animada { transition: transform 0.25s ease; }
+        .tarjeta-animada:hover { transform: translateY(-5px); }
+
+        /* === VENTANITA MODAL === */
+        .modal-fondo {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+            z-index: 999; align-items: flex-end; justify-content: center; padding: 0;
+        }
+        .modal-fondo.activo { display: flex; }
+        .modal-ventana {
+            background: white; border-radius: 24px 24px 0 0; padding: 0; max-width: 500px; width: 100%;
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.15); overflow: hidden;
+            animation: modal-aparecer 0.3s ease; max-height: 90vh; overflow-y: auto;
+        }
+        @keyframes modal-aparecer {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-imagen { width: 100%; height: 200px; object-fit: cover; }
+        .modal-cerrar {
+            position: absolute; top: 12px; right: 12px;
+            background: #ff4444; border: none; width: 40px; height: 40px; border-radius: 50%;
+            font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: white; transition: all 0.2s ease;
+        }
+        .modal-cerrar:hover { background: #ff0000; transform: scale(1.1); }
+        .modal-cuerpo { padding: 24px; }
+        .modal-titulo {
+            font-size: 28px; font-weight: 900; color: #1E1E24; margin: 0 0 12px 0;
+        }
+        .modal-descripcion {
+            color: #4B5563; font-size: 16px; line-height: 1.6; margin-bottom: 20px;
+        }
+        .modal-subtitulo {
+            font-size: 18px; font-weight: 700; color: #E63946; margin: 20px 0 10px 0;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .modal-ingredientes-lista {
+            color: #374151; font-size: 16px; line-height: 1.8; padding-left: 4px;
+        }
+        .modal-divisor {
+            height: 2px; background: repeating-linear-gradient(90deg, #FF9F1C, #FF9F1C 8px, transparent 8px, transparent 16px);
+            margin: 20px 0; border: none;
+        }
+        .modal-fila-precio {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-etiqueta-precio {
+            font-size: 18px; font-weight: 500; color: #374151;
+        }
+        .modal-precio-valor {
+            font-size: 32px; font-weight: 900;
+            background: linear-gradient(90deg, #E63946, #FF9F1C);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .refresco-nota {
+            background: linear-gradient(135deg, #fff8e1, #fff3cd);
+            border-left: 4px solid #FF9F1C; border-radius: 10px;
+            padding: 12px; margin-top: 16px;
+        }
+
+        #btnMenu { transition: transform 0.25s ease; }
+        #btnMenu:hover { transform: rotate(90deg) scale(1.08); background: linear-gradient(135deg, #E63946, #FF9F1C); color: white; }
+        #menuDesplegable { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        #menuDesplegable.mostrar { max-height: 500px; padding: 10px 0; }
+        #menuDesplegable a:hover { transform: translateX(6px); background: linear-gradient(90deg, rgba(230,57,70,0.08), transparent); }
+    </style>
+</head>
+<body class="bg-claro text-oscuro font-cuerpo antialiased">
+
+<div id="contenido-pagina">
+<nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
+        <a href="index.html" class="flex items-center gap-3" onclick="navegar(event, 'index.html')">
+            <img src="logo-paladar-loco.png" alt="Logo" class="h-10 md:h-12 w-auto rounded-lg">
+            <span class="text-xl md:text-2xl lg:text-3xl font-titulo font-extrabold text-primario tracking-wide">PALADAR LOCO</span>
+        </a>
+        <button id="btnMenu" class="text-2xl p-2 hover:bg-red-50 rounded-lg">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div id="menuDesplegable" class="md:px-6">
+        <div class="max-w-7xl mx-auto px-4 md:px-0 py-3 grid md:grid-cols-2 gap-2">
+            <a href="index.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'index.html')"><i class="fa fa-home"></i> Inicio</a>
+            <a href="menu.html" class="py-2 px-3 rounded-lg bg-red-50 font-bold text-primario flex items-center gap-2"><i class="fa fa-cutlery"></i> Menú</a>
+            <a href="pagos.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'pagos.html')"><i class="fa fa-credit-card text-primario"></i> Métodos de Pago</a>
+            <a href="redes.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'redes.html')"><i class="fa fa-share-alt text-primario"></i> Redes Sociales</a>
+            <a href="nosotros.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'nosotros.html')"><i class="fa fa-users text-primario"></i> Sobre Nosotros</a>
+            <a href="ubicacion.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2" onclick="navegar(event, 'ubicacion.html')"><i class="fa fa-map-marker text-primario"></i> Ubicación y Horario</a>
+            <a href="entretenimiento.html" class="py-2 px-3 rounded-lg hover:bg-red-50 flex items-center gap-2 md:col-span-2" onclick="navegar(event, 'entretenimiento.html')"><i class="fa fa-gamepad text-primario"></i> Entretenimiento — Encuestas, juegos y más 🎮</a>
+        </div>
+    </div>
+</nav>
+
+<main class="pt-24 pb-16 px-4 md:px-6 max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-titulo titulo-animado titulo-seccion inline-block">
+            <span class="emoji-giro">📋</span> NUESTRO MENÚ
+        </h1>
+        <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Toca "Más información" para ver los detalles. ¡Todos los combos llevan refresco incluido! 🥤</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- El Clasicazo -->
+        <div class="borde-animado tarjeta-animada">
+            <div class="borde-interior p-5">
+                <img src="el_clasicazo.jpg" alt="El Clasicazo" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.src='https://via.placeholder.com/400x300/E63946/FFFFFF?text=El+Clasicazo'">
+                <h3 class="text-xl font-bold titulo-animado mb-2"><span class="emoji-giro">🌭</span> El Clasicazo</h3>
+                <p class="precio-animado mb-3">₡1.200</p>
+                <button class="mas-info" onclick="abrirModal({
+                    nombre: 'El Clasicazo',
+                    descripcion: 'El perro caliente tradicional que nunca falla. Sencillo, delicioso y el favorito de todos.',
+                    ingredientes: ['Pan fresco', 'Salchicha jugosa', 'Repollo', 'Papas trituradas', 'Salsas clásicas', 'Fresco'],
+                    datoCurioso: '¡Es nuestro producto más vendido! Perfecto para quienes aman lo tradicional.',
+                    precio: '₡1.200',
+                    imagen: 'el_clasicazo.jpg'
+                })">🔍 Más información</button>
+            </div>
+        </div>
+
+        <!-- Todo Terreno -->
+        <div class="borde-animado tarjeta-animada">
+            <div class="borde-interior p-5">
+                <img src="todo_terreno.jpg" alt="Todo Terreno" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.src='https://via.placeholder.com/400x300/FF9F1C/FFFFFF?text=Todo+Terreno'">
+                <h3 class="text-xl font-bold titulo-animado mb-2"><span class="emoji-giro" style="animation-delay:0.3s;">🥑</span> Todo Terreno</h3>
+                <p class="precio-animado mb-3">₡1.800</p>
+                <button class="mas-info" onclick="abrirModal({
+                    nombre: 'Todo Terreno',
+                    descripcion: 'Una combinación espectacular con guacamole y chimichurri que te encantará.',
+                    ingredientes: ['Pan', 'Salchicha', 'Guacamole', 'Salsa', 'Cebolla caramelizada', 'Chimichurri', 'Fresco'],
+                    datoCurioso: 'La combinación favorita de los que buscan algo diferente y lleno de sabor.',
+                    precio: '₡1.800',
+                    imagen: 'todo_terreno.jpg'
+                })">🔍 Más información</button>
+            </div>
+        </div>
+
+        <!-- El Loco BBQ -->
+        <div class="borde-animado tarjeta-animada">
+            <div class="borde-interior p-5">
+                <img src="el_loco_bbq.jpg" alt="El Loco BBQ" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.src='https://via.placeholder.com/400x300/8B4513/FFFFFF?text=El+Loco+BBQ'">
+                <h3 class="text-xl font-bold titulo-animado mb-2"><span class="emoji-giro" style="animation-delay:0.6s;">🔥</span> El Loco BBQ</h3>
+                <p class="precio-animado mb-3">₡2.000</p>
+                <button class="mas-info" onclick="abrirModal({
+                    nombre: 'El Loco BBQ',
+                    descripcion: 'Salsa BBQ y cebolla caramelizada para un sabor ahumado irresistible.',
+                    ingredientes: ['Pan', 'Salchicha', 'Cebolla caramelizada', 'Salsa BBQ'],
+                    datoCurioso: 'Para los amantes del sabor intenso y dulce-ahumado.',
+                    precio: '₡2.000',
+                    imagen: 'el_loco_bbq.jpg'
+                })">🔍 Más información</button>
+            </div>
+        </div>
+
+        <!-- El Crunchi Bacon -->
+        <div class="borde-animado tarjeta-animada">
+            <div class="borde-interior p-5">
+                <img src="el_crunchi_bacon.jpg" alt="El Crunchi Bacon" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.src='https://via.placeholder.com/400x300/DAA520/FFFFFF?text=El+Crunchi+Bacon'">
+                <h3 class="text-xl font-bold titulo-animado mb-2"><span class="emoji-giro" style="animation-delay:0.9s;">🥓</span> El Crunchi Bacon</h3>
+                <p class="precio-animado mb-3">₡2.200</p>
+                <button class="mas-info" onclick="abrirModal({
+                    nombre: 'El Crunchi Bacon',
+                    descripcion: 'Tocineta crujiente y cebolla crispy que le dan una textura increíble.',
+                    ingredientes: ['Pan', 'Salchicha', 'Tocineta en trozos', 'Cebolla Crispy', 'Salsa Especial'],
+                    datoCurioso: 'El más crujiente de todos. ¡Pura textura y sabor!',
+                    precio: '₡2.200',
+                    imagen: 'el_crunchi_bacon.jpg'
+                })">🔍 Más información</button>
+            </div>
+        </div>
+
+        <!-- TropiDog -->
+        <div class="borde-animado tarjeta-animada">
+            <div class="borde-interior p-5">
+                <img src="tropidog.jpg" alt="TropiDog" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.src='https://via.placeholder.com/400x300/FF8C00/FFFFFF?text=TropiDog'">
+                <h3 class="text-xl font-bold titulo-animado mb-2"><span class="emoji-giro" style="animation-delay:1.2s;">🍍</span> TropiDog</h3>
+                <p class="precio-animado mb-3">₡1.700</p>
+                <button class="mas-info" onclick="abrirModal({
+                    nombre: 'TropiDog',
+                    descripcion: 'Piña dulce con queso mozzarella, una combinación tropical espectacular.',
+                    ingredientes: ['Pan', 'Salchicha', 'Cebolla caramelizada', 'Piña', 'Queso Mozzarella'],
+                    datoCurioso: 'El toque tropical que no esperabas. ¡Dulce y salado perfecto!',
+                    precio: '₡1.700',
+                    imagen: 'tropidog.jpg'
+                })">🔍 Más información</button>
+            </div>
+        </div>
+
+        <!-- Dulce Tentación -->
+        <div class="borde-animado tarjeta-animada">
+            <div class="borde-interior p-5">
+                <img src="dulce_tentacion.jpg" alt="Dulce Tentación" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.src='https://via.placeholder.com/400x300/FF69B4/FFFFFF?text=Dulce+Tentaci%C3%B3n'">
+                <h3 class="text-xl font-bold titulo-animado mb-2"><span class="emoji-giro" style="animation-delay:1.5s;">🍩</span> Dulce Tentación</h3>
+                <p class="precio-animado mb-3">₡2.000</p>
+                <button class="mas-info" onclick="abrirModalDulce()">🔍 Más información</button>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- VENTANITA -->
+<div id="ventanita" class="modal-fondo" onclick="cerrarModalExterior(event)">
+    <div class="modal-ventana" onclick="event.stopPropagation()">
+        <div style="position: relative;">
+            <img id="modal-img" src="" alt="" class="modal-imagen">
+            <button class="modal-cerrar" onclick="cerrarModal()">✕</button>
+        </div>
+        <div class="modal-cuerpo">
+            <h2 id="modal-titulo" class="modal-titulo"></h2>
+            <p id="modal-descripcion" class="modal-descripcion"></p>
+            <h3 class="modal-subtitulo"><i class="fa fa-list-alt"></i> Ingredientes:</h3>
+            <div id="modal-ingredientes" class="modal-ingredientes-lista"></div>
+            <h3 class="modal-subtitulo"><i class="fa fa-lightbulb-o"></i> Dato curioso:</h3>
+            <p id="modal-dato" class="modal-descripcion" style="margin:0;"></p>
+            <div class="refresco-nota">
+                <p class="font-bold text-amber-800 m-0"><span class="emoji-giro">🥤</span> ¡Incluye refresco!</p>
+                <p class="text-sm text-amber-700 mt-1 mb-0">Cada combo lleva un refresco <strong>Big Cola</strong> a elegir entre los sabores:</p>
+                <p class="text-sm font-semibold text-amber-800 mt-1">Negra • Morada • Verde • ¡Y más! 😋</p>
+            </div>
+            <hr class="modal-divisor">
+            <div class="modal-fila-precio">
+                <span class="modal-etiqueta-precio">Precio:</span>
+                <span id="modal-precio" class="modal-precio-valor"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-oscuro text-white py-6 text-center">
+    <p class="text-base md:text-lg font-titulo font-bold tracking-wide">PALADAR LOCO — PROYECTO TÉCNICAS 2026</p>
+</footer>
+</div>
+
+<script>
+const btnMenu = document.getElementById('btnMenu');
+const menuDesplegable = document.getElementById('menuDesplegable');
+btnMenu.addEventListener('click', () => menuDesplegable.classList.toggle('mostrar'));
+
+const ventanita = document.getElementById('ventanita');
+const modalImg = document.getElementById('modal-img');
+const modalTitulo = document.getElementById('modal-titulo');
+const modalDescripcion = document.getElementById('modal-descripcion');
+const modalIngredientes = document.getElementById('modal-ingredientes');
+const modalDato = document.getElementById('modal-dato');
+const modalPrecio = document.getElementById('modal-precio');
+
+function abrirModal(info) {
+    modalImg.src = info.imagen;
+    modalImg.onerror = function(){ this.src='https://via.placeholder.com/500x200/E63946/FFFFFF?text=' + encodeURIComponent(info.nombre); };
+    modalTitulo.textContent = info.nombre;
+    modalDescripcion.textContent = info.descripcion;
+    modalIngredientes.innerHTML = info.ingredientes.map(i => `<div>✅ ${i}</div>`).join('');
+    modalDato.textContent = info.datoCurioso;
+    modalPrecio.textContent = info.precio;
+    ventanita.classList.add('activo');
+    document.body.style.overflow = 'hidden';
+}
+
+function abrirModalDulce() {
+    modalImg.src = 'dulce_tentacion.jpg';
+    modalImg.onerror = function(){ this.src='https://via.placeholder.com/500x200/FF69B4/FFFFFF?text=Dulce+Tentaci%C3%B3n'; };
+    modalTitulo.textContent = 'Dulce Tentación';
+    modalDescripcion.textContent = 'Un postre delicioso para cerrar con broche de oro. ¡Tú eliges cómo disfrutarlo!';
+    modalIngredientes.innerHTML = `
+        <div>✅ 2 Churros</div>
+        <div style="margin-top:8px; font-weight:600;">Toppings a elegir (solo 2):</div>
+        <div>• Galleta triturada: Oreo o Chips</div>
+        <div>• Maní y chispas de colores</div>
+        <div style="margin-top:8px; font-weight:600;">Siropes (1 a escoger):</div>
+        <div>• Leche Condensada</div>
+        <div>• Chocolate</div>
+        <div>• Caramelo</div>
+    `;
+    modalDato.textContent = '¡El favorito de los que aman lo dulce! Puedes personalizarlo a tu gusto.';
+    modalPrecio.textContent = '₡2.000';
+    ventanita.classList.add('activo');
+    document.body.style.overflow = 'hidden';
+}
+
+function cerrarModal() {
+    ventanita.classList.remove('activo');
+    document.body.style.overflow = '';
+}
+function cerrarModalExterior(event) {
+    if (event.target === ventanita) cerrarModal();
+}
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') cerrarModal();
+});
+
+function navegar(event, url) {
+    event.preventDefault();
+    const contenido = document.getElementById('contenido-pagina');
+    contenido.classList.add('animar-salida');
+    setTimeout(() => window.location.href = url, 350);
+}
+</script>
+</body>
+</html>
