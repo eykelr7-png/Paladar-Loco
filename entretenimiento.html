@@ -23,7 +23,6 @@
         * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
         html { scroll-behavior: smooth; }
         body { margin: 0; padding: 0; overflow-x: hidden; background: #FFF9F0; }
-
         .borde-animado {
             position: relative; border-radius: 20px; padding: 5px; overflow: hidden;
         }
@@ -39,7 +38,6 @@
         .borde-interior {
             position: relative; z-index: 1; background: white; border-radius: 17px; height: 100%;
         }
-
         .titulo-animado {
             background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
             background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
@@ -51,24 +49,19 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
         .emoji-giro { display: inline-block; animation: giro-lento 4s ease-in-out infinite; }
         @keyframes giro-lento { 0% { transform: rotateY(-20deg); } 50% { transform: rotateY(20deg); } 100% { transform: rotateY(-20deg); } }
-
         .titulo-seccion { position: relative; display: inline-block; }
         .titulo-seccion::after {
             content: ''; position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%);
             width: 55%; height: 3px; background: linear-gradient(90deg, transparent, #E63946, #FF9F1C, #E63946, transparent);
             border-radius: 2px;
         }
-
         .tarjeta-animada { transition: transform 0.25s ease; }
         .tarjeta-animada:hover { transform: translateY(-5px); }
-
         .imagen-tarjeta {
             width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 16px;
         }
-
         .boton-accion {
             background: linear-gradient(90deg, #E63946, #FF9F1C, #FFD700, #FF9F1C, #E63946);
             background-size: 300% 100%; color: white; font-weight: bold; padding: 10px 24px;
@@ -81,7 +74,6 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
         .encuesta-opcion, .pregunta-opcion {
             border: 2px solid #eee; border-radius: 12px; padding: 12px 16px; margin: 8px 0;
             cursor: pointer; transition: all 0.2s ease;
@@ -90,22 +82,26 @@
         .encuesta-opcion.seleccionada { border-color: #E63946; background: #fff0f0; }
         .pregunta-opcion.correcta { border-color: #22c55e; background: #f0fdf4; }
         .pregunta-opcion.incorrecta { border-color: #ef4444; background: #fef2f2; }
-
         .barra { height: 24px; border-radius: 12px; background: linear-gradient(90deg, #E63946, #FF9F1C); transition: width 0.5s ease; }
         .explicacion { background: #f0f9ff; border-left: 4px solid #0ea5e9; padding: 12px; border-radius: 0 10px 10px 0; margin-top: 10px; }
-
         #btnMenu { transition: transform 0.25s ease; }
         #btnMenu:hover { transform: rotate(90deg) scale(1.08); background: linear-gradient(135deg, #E63946, #FF9F1C); color: white; }
         #menuDesplegable { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
         #menuDesplegable.mostrar { max-height: 500px; padding: 10px 0; }
         #menuDesplegable a:hover { transform: translateX(6px); background: linear-gradient(90deg, rgba(230,57,70,0.08), transparent); }
-
         .animar-salida { animation: salida 0.4s ease-in forwards; }
         @keyframes salida { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-15px); } }
+        #contenido-pagina {
+            opacity: 0; transform: translateY(20px);
+            animation: pagina-entrada 0.8s ease-out forwards;
+        }
+        @keyframes pagina-entrada {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="bg-claro text-oscuro font-cuerpo antialiased">
-
 <div id="contenido-pagina">
 <nav class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-md z-50">
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
@@ -129,7 +125,6 @@
         </div>
     </div>
 </nav>
-
 <main class="pt-24 pb-16 px-4 md:px-6 max-w-5xl mx-auto">
     <div class="text-center mb-12">
         <h1 class="text-3xl md:text-4xl font-titulo titulo-animado titulo-seccion inline-block">
@@ -137,14 +132,12 @@
         </h1>
         <p class="text-gray-600 mt-4 max-w-2xl mx-auto">¡Diviértete un poco! Vota por tu favorito y pon a prueba lo que sabes de nuestro puesto. 😄</p>
     </div>
-
     <!-- ENCUESTA CON ESTADÍSTICAS -->
     <div class="borde-animado tarjeta-animada mb-8">
         <div class="borde-interior p-6">
             <img src="imagen-encuesta.jpg" alt="Encuesta" class="imagen-tarjeta" onerror="this.src='https://via.placeholder.com/600x180/E63946/FFFFFF?text=📊+ENCUESTA+¿Cuál+es+tu+favorito?'">
             <h3 class="text-xl font-bold titulo-animado mb-4"><span class="emoji-giro">📊</span> ENCUESTA — ¿Cuál es tu perro favorito?</h3>
             <p class="text-gray-600 mb-4">Vota por tu perro caliente favorito. ¡Tu voto ayuda mucho!</p>
-
             <div id="encuestaOpciones">
                 <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'El Clasicazo')">🌭 El Clasicazo — ₡1.200</div>
                 <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'Todo Terreno')">🥑 Todo Terreno — ₡1.800</div>
@@ -153,10 +146,8 @@
                 <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'TropiDog')">🍍 TropiDog — ₡1.700</div>
                 <div class="encuesta-opcion" onclick="seleccionarVoto(this, 'Dulce Tentación')">🍩 Dulce Tentación — ₡2.000</div>
             </div>
-
             <button class="boton-accion mt-4" onclick="enviarVoto()">✅ Enviar mi voto</button>
             <p id="mensajeVoto" class="text-green-600 font-semibold mt-3" style="display:none;">¡Gracias por votar! ❤️ Aquí van los resultados:</p>
-
             <!-- ESTADÍSTICAS -->
             <div id="estadisticas" class="mt-6" style="display:none;">
                 <h4 class="font-bold text-lg mb-3">📈 Resultados:</h4>
@@ -164,30 +155,25 @@
             </div>
         </div>
     </div>
-
     <!-- JUEGO DE PREGUNTAS -->
     <div class="borde-animado tarjeta-animada">
         <div class="borde-interior p-6">
             <img src="imagen-juego.jpg" alt="Juego de preguntas" class="imagen-tarjeta" onerror="this.src='https://via.placeholder.com/600x180/FF9F1C/FFFFFF?text=🎯+JUEGO+DE+PREGUNTAS'">
             <h3 class="text-xl font-bold titulo-animado mb-4"><span class="emoji-giro">🎯</span> JUEGO — ¿Qué sabes de nuestro puesto?</h3>
             <p class="text-gray-600 mb-4">Responde y descubre si estás en lo correcto. ¡Al final te diremos por qué!</p>
-
             <div id="contenedor-preguntas"></div>
             <button class="boton-accion mt-6" onclick="reiniciarJuego()">🔄 Reiniciar juego</button>
         </div>
     </div>
 </main>
-
 <footer class="bg-oscuro text-white py-6 text-center">
     <p class="text-base md:text-lg font-titulo font-bold tracking-wide">PALADAR LOCO — PROYECTO TÉCNICAS 2026</p>
 </footer>
 </div>
-
 <script>
 const btnMenu = document.getElementById('btnMenu');
 const menuDesplegable = document.getElementById('menuDesplegable');
 btnMenu.addEventListener('click', () => menuDesplegable.classList.toggle('mostrar'));
-
 // === ENCUESTA ===
 let votoSeleccionado = null;
 let votos = {
@@ -200,7 +186,6 @@ let votos = {
 };
 let totalVotos = 0;
 let yaVoto = false;
-
 // Cargar votos guardados
 function cargarVotos() {
     const guardado = localStorage.getItem('votosPaladarLoco');
@@ -211,36 +196,28 @@ function cargarVotos() {
     }
 }
 cargarVotos();
-
 function seleccionarVoto(elemento, nombre) {
     if (yaVoto) return;
     document.querySelectorAll('.encuesta-opcion').forEach(op => op.classList.remove('seleccionada'));
     elemento.classList.add('seleccionada');
     votoSeleccionado = nombre;
 }
-
 function enviarVoto() {
     if (yaVoto) return alert('⚠️ Ya votaste. Mira los resultados abajo.');
     if (!votoSeleccionado) return alert('⚠️ Por favor selecciona una opción.');
-
     votos[votoSeleccionado]++;
     totalVotos++;
     yaVoto = true;
-
     // Guardar
     localStorage.setItem('votosPaladarLoco', JSON.stringify({ votos, total: totalVotos }));
-
     document.getElementById('mensajeVoto').style.display = 'block';
     document.getElementById('estadisticas').style.display = 'block';
     document.querySelectorAll('.encuesta-opcion').forEach(op => op.style.pointerEvents = 'none');
-
     mostrarEstadisticas();
 }
-
 function mostrarEstadisticas() {
     const contenedor = document.getElementById('contenedor-barras');
     contenedor.innerHTML = '';
-
     for (const [nombre, cantidad] of Object.entries(votos)) {
         const porcentaje = totalVotos > 0 ? Math.round((cantidad / totalVotos) * 100) : 0;
         contenedor.innerHTML += `
@@ -256,7 +233,6 @@ function mostrarEstadisticas() {
         `;
     }
 }
-
 // === JUEGO DE PREGUNTAS ===
 const preguntas = [
     {
@@ -290,13 +266,10 @@ const preguntas = [
         explicacion: "✅ ¡Claro que sí! Cada combo lleva su refresco Big Cola incluido. ¡Elige tu sabor favorito!"
     }
 ];
-
 let respondidas = [];
-
 function cargarPreguntas() {
     const contenedor = document.getElementById('contenedor-preguntas');
     contenedor.innerHTML = '';
-
     preguntas.forEach((preg, indice) => {
         const yaRespondida = respondidas.includes(indice);
         contenedor.innerHTML += `
@@ -319,26 +292,20 @@ function cargarPreguntas() {
         `;
     });
 }
-
 cargarPreguntas();
-
 function verificarRespuesta(indicePregunta, indiceOpcion) {
     if (respondidas.includes(indicePregunta)) return;
-
     const pregunta = preguntas[indicePregunta];
     const opciones = document.querySelectorAll(`#pregunta-${indicePregunta} .pregunta-opcion`);
     const explicacion = document.getElementById(`explicacion-${indicePregunta}`);
-
     opciones.forEach((op, i) => {
         op.style.pointerEvents = 'none';
         if (i === pregunta.correcta) op.classList.add('correcta');
         else if (i === indiceOpcion && i !== pregunta.correcta) op.classList.add('incorrecta');
     });
-
     explicacion.style.display = 'block';
     respondidas.push(indicePregunta);
 }
-
 function reiniciarJuego() {
     if (confirm('¿Seguro que quieres reiniciar el juego?')) {
         respondidas = [];
@@ -356,7 +323,6 @@ function reiniciarJuego() {
         cargarPreguntas();
     }
 }
-
 function navegar(event, url) {
     event.preventDefault();
     const contenido = document.getElementById('contenido-pagina');
